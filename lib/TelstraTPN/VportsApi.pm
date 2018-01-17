@@ -28,52 +28,49 @@ use Carp qw( croak );
 use Log::Any qw($log);
 
 use TelstraTPN::ApiClient;
-use TelstraTPN::Configuration;
 
 use base "Class::Data::Inheritable";
 
 __PACKAGE__->mk_classdata('method_documentation' => {});
 
 sub new {
-    my $class   = shift;
-    my (%self) = (
-        'api_client' => TelstraTPN::ApiClient->instance,
-        @_
-    );
+    my $class = shift;
+    my $api_client;
 
-    #my $self = {
-    #    #api_client => $options->{api_client}
-    #    api_client => $default_api_client
-    #}; 
+    if ($_[0] && ref $_[0] && ref $_[0] eq 'TelstraTPN::ApiClient' ) {
+        $api_client = $_[0];
+    } else {
+        $api_client = TelstraTPN::ApiClient->new(@_);
+    }
 
-    bless \%self, $class;
+    bless { api_client => $api_client }, $class;
 
 }
 
 
 #
-# 100_inventory_regularvport_post
+# inventory_regularvport_post
 #
 # Create VPort for physical endpoint
 # 
-# @param Model100InventoryRegularvportRequest $body  (optional)
+# @param InventoryRegularvportRequest $body  (optional)
 {
     my $params = {
     'body' => {
-        data_type => 'Model100InventoryRegularvportRequest',
+        data_type => 'InventoryRegularvportRequest',
         description => '',
         required => '0',
     },
     };
-    __PACKAGE__->method_documentation->{ '100_inventory_regularvport_post' } = { 
+    __PACKAGE__->method_documentation->{ 'inventory_regularvport_post' } = { 
     	summary => 'Create VPort for physical endpoint',
         params => $params,
-        returns => 'Model100InventoryRegularvportResponse',
+        returns => 'InventoryRegularvportResponse',
         };
 }
-# @return Model100InventoryRegularvportResponse
+# @return InventoryRegularvportResponse
 #
-sub 100_inventory_regularvport_post {
+sub inventory_regularvport_post {
     my ($self, %args) = @_;
 
     # parse inputs
@@ -98,7 +95,7 @@ sub 100_inventory_regularvport_post {
     }
 
     # authentication setting, if any
-    my $auth_settings = [qw()];
+    my $auth_settings = [qw(auth )];
 
     # make the API Call
     my $response = $self->{api_client}->call_api($_resource_path, $_method,
@@ -107,33 +104,33 @@ sub 100_inventory_regularvport_post {
     if (!$response) {
         return;
     }
-    my $_response_object = $self->{api_client}->deserialize('Model100InventoryRegularvportResponse', $response);
+    my $_response_object = $self->{api_client}->deserialize('InventoryRegularvportResponse', $response);
     return $_response_object;
 }
 
 #
-# 100_inventory_vnf_vport_post
+# inventory_vnf_vport_post
 #
 # Create VNF VPort
 # 
-# @param Model100InventoryVnfVportRequest $body  (optional)
+# @param InventoryVnfVportRequest $body  (optional)
 {
     my $params = {
     'body' => {
-        data_type => 'Model100InventoryVnfVportRequest',
+        data_type => 'InventoryVnfVportRequest',
         description => '',
         required => '0',
     },
     };
-    __PACKAGE__->method_documentation->{ '100_inventory_vnf_vport_post' } = { 
+    __PACKAGE__->method_documentation->{ 'inventory_vnf_vport_post' } = { 
     	summary => 'Create VNF VPort',
         params => $params,
-        returns => 'Model100InventoryVnfVportResponse',
+        returns => 'InventoryVnfVportResponse',
         };
 }
-# @return Model100InventoryVnfVportResponse
+# @return InventoryVnfVportResponse
 #
-sub 100_inventory_vnf_vport_post {
+sub inventory_vnf_vport_post {
     my ($self, %args) = @_;
 
     # parse inputs
@@ -158,7 +155,7 @@ sub 100_inventory_vnf_vport_post {
     }
 
     # authentication setting, if any
-    my $auth_settings = [qw()];
+    my $auth_settings = [qw(auth )];
 
     # make the API Call
     my $response = $self->{api_client}->call_api($_resource_path, $_method,
@@ -167,12 +164,12 @@ sub 100_inventory_vnf_vport_post {
     if (!$response) {
         return;
     }
-    my $_response_object = $self->{api_client}->deserialize('Model100InventoryVnfVportResponse', $response);
+    my $_response_object = $self->{api_client}->deserialize('InventoryVnfVportResponse', $response);
     return $_response_object;
 }
 
 #
-# 100_inventory_vport_by_vportuuid_get
+# inventory_vport_by_vportuuid_get
 #
 # Get information about the specified VPort
 # 
@@ -185,20 +182,20 @@ sub 100_inventory_vnf_vport_post {
         required => '1',
     },
     };
-    __PACKAGE__->method_documentation->{ '100_inventory_vport_by_vportuuid_get' } = { 
+    __PACKAGE__->method_documentation->{ 'inventory_vport_by_vportuuid_get' } = { 
     	summary => 'Get information about the specified VPort',
         params => $params,
-        returns => 'EndpointPort',
+        returns => 'ARRAY[EndpointPort]',
         };
 }
-# @return EndpointPort
+# @return ARRAY[EndpointPort]
 #
-sub 100_inventory_vport_by_vportuuid_get {
+sub inventory_vport_by_vportuuid_get {
     my ($self, %args) = @_;
 
     # verify the required parameter 'vportuuid' is set
     unless (exists $args{'vportuuid'}) {
-      croak("Missing the required parameter 'vportuuid' when calling 100_inventory_vport_by_vportuuid_get");
+      croak("Missing the required parameter 'vportuuid' when calling inventory_vport_by_vportuuid_get");
     }
 
     # parse inputs
@@ -225,7 +222,7 @@ sub 100_inventory_vport_by_vportuuid_get {
 
     my $_body_data;
     # authentication setting, if any
-    my $auth_settings = [qw()];
+    my $auth_settings = [qw(auth )];
 
     # make the API Call
     my $response = $self->{api_client}->call_api($_resource_path, $_method,
@@ -234,7 +231,7 @@ sub 100_inventory_vport_by_vportuuid_get {
     if (!$response) {
         return;
     }
-    my $_response_object = $self->{api_client}->deserialize('EndpointPort', $response);
+    my $_response_object = $self->{api_client}->deserialize('ARRAY[EndpointPort]', $response);
     return $_response_object;
 }
 

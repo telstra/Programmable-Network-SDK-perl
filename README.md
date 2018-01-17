@@ -1,4 +1,4 @@
-# Programmable Network perl SDK
+# NAME
 
 TelstraTPN::Role - a Moose role for the Telstra Programmable Network API
 
@@ -85,37 +85,37 @@ you are accessing. Usually `prefix` and `in` will be determined by the code gene
 the spec and you will not need to set them at run time. If not, `in` will
 default to 'head' and `prefix` to the empty string.
 
-The tokens will be placed in the `TelstraTPN::Configuration` namespace
+The tokens will be placed in a L<TelstraTPN::Configuration> instance
 as follows, but you don't need to know about this.
 
-- `$TelstraTPN::Configuration::username`
+- `$cfg->{username}`
 
     String. The username for basic auth.
 
-- `$TelstraTPN::Configuration::password`
+- `$cfg->{password}`
 
     String. The password for basic auth.
 
-- `$TelstraTPN::Configuration::api_key`
+- `$cfg->{api_key}`
 
     Hashref. Keyed on the name of each key (there can be multiple tokens).
 
-            $TelstraTPN::Configuration::api_key = {
+            $cfg->{api_key} = {
                     secretKey => 'aaaabbbbccccdddd',
                     anotherKey => '1111222233334444',
                     };
 
-- `$TelstraTPN::Configuration::api_key_prefix`
+- `$cfg->{api_key_prefix}`
 
     Hashref. Keyed on the name of each key (there can be multiple tokens). Note not
     all api keys require a prefix.
 
-            $TelstraTPN::Configuration::api_key_prefix = {
+            $cfg->{api_key_prefix} = {
                     secretKey => 'string',
                     anotherKey => 'same or some other string',
                     };
 
-- `$TelstraTPN::Configuration::access_token`
+- `$cfg->{access_token}`
 
     String. The OAuth access token.
 
@@ -124,8 +124,7 @@ as follows, but you don't need to know about this.
 ## `base_url`
 
 The generated code has the `base_url` already set as a default value. This method
-returns (and optionally sets, but only if the API client has not been
-created yet) the current value of `base_url`.
+returns the current value of `base_url`.
 
 ## `api_factory`
 
@@ -233,6 +232,9 @@ use TelstraTPN::VportsApi;
 
 To load the models:
 ```perl
+use TelstraTPN::Object::AccountResponse;
+use TelstraTPN::Object::AuthGeneratetokenResponse;
+use TelstraTPN::Object::AuthValidatetokenResponse;
 use TelstraTPN::Object::Billing;
 use TelstraTPN::Object::Classification;
 use TelstraTPN::Object::Contract;
@@ -245,34 +247,31 @@ use TelstraTPN::Object::Error;
 use TelstraTPN::Object::Error74;
 use TelstraTPN::Object::Flavor;
 use TelstraTPN::Object::GlanceImage;
+use TelstraTPN::Object::InventoryDatacenters401Error;
+use TelstraTPN::Object::InventoryDatacentersResponse;
+use TelstraTPN::Object::InventoryEndpointResponse;
+use TelstraTPN::Object::InventoryEndpointsCustomeruuidResponse;
+use TelstraTPN::Object::InventoryLinkRequest;
+use TelstraTPN::Object::InventoryLinkResponse;
+use TelstraTPN::Object::InventoryLinksContractRequest;
+use TelstraTPN::Object::InventoryLinksContractRequest37;
+use TelstraTPN::Object::InventoryLinksContractResponse;
+use TelstraTPN::Object::InventoryLinksContractResponse33;
+use TelstraTPN::Object::InventoryLinksContractResponse38;
+use TelstraTPN::Object::InventoryLinksHistoryResponse;
+use TelstraTPN::Object::InventoryLinksResponse;
+use TelstraTPN::Object::InventoryRegularendpointRequest;
+use TelstraTPN::Object::InventoryRegularendpointResponse;
+use TelstraTPN::Object::InventoryRegularvportRequest;
+use TelstraTPN::Object::InventoryRegularvportResponse;
+use TelstraTPN::Object::InventoryVnfVportRequest;
+use TelstraTPN::Object::InventoryVnfVportResponse;
+use TelstraTPN::Object::InventoryVnfendpointRequest;
+use TelstraTPN::Object::InventoryVnfendpointResponse;
 use TelstraTPN::Object::Link;
 use TelstraTPN::Object::Link66;
+use TelstraTPN::Object::MarketplaceImageResponse;
 use TelstraTPN::Object::Meta;
-use TelstraTPN::Object::Model100AccountResponse;
-use TelstraTPN::Object::Model100AuthGeneratetokenResponse;
-use TelstraTPN::Object::Model100AuthValidatetokenResponse;
-use TelstraTPN::Object::Model100InventoryDatacenters401Error;
-use TelstraTPN::Object::Model100InventoryDatacentersResponse;
-use TelstraTPN::Object::Model100InventoryEndpointResponse;
-use TelstraTPN::Object::Model100InventoryEndpointsCustomeruuidResponse;
-use TelstraTPN::Object::Model100InventoryLinkRequest;
-use TelstraTPN::Object::Model100InventoryLinkResponse;
-use TelstraTPN::Object::Model100InventoryLinksContractRequest;
-use TelstraTPN::Object::Model100InventoryLinksContractRequest37;
-use TelstraTPN::Object::Model100InventoryLinksContractResponse;
-use TelstraTPN::Object::Model100InventoryLinksContractResponse33;
-use TelstraTPN::Object::Model100InventoryLinksContractResponse38;
-use TelstraTPN::Object::Model100InventoryLinksHistoryResponse;
-use TelstraTPN::Object::Model100InventoryLinksResponse;
-use TelstraTPN::Object::Model100InventoryRegularendpointRequest;
-use TelstraTPN::Object::Model100InventoryRegularendpointResponse;
-use TelstraTPN::Object::Model100InventoryRegularvportRequest;
-use TelstraTPN::Object::Model100InventoryRegularvportResponse;
-use TelstraTPN::Object::Model100InventoryVnfVportRequest;
-use TelstraTPN::Object::Model100InventoryVnfVportResponse;
-use TelstraTPN::Object::Model100InventoryVnfendpointRequest;
-use TelstraTPN::Object::Model100InventoryVnfendpointResponse;
-use TelstraTPN::Object::Model100MarketplaceImageResponse;
 use TelstraTPN::Object::Object52;
 use TelstraTPN::Object::Params;
 use TelstraTPN::Object::Params31;
@@ -311,6 +310,9 @@ use TelstraTPN::VnfsApi;
 use TelstraTPN::VportsApi;
 
 # load the models
+use TelstraTPN::Object::AccountResponse;
+use TelstraTPN::Object::AuthGeneratetokenResponse;
+use TelstraTPN::Object::AuthValidatetokenResponse;
 use TelstraTPN::Object::Billing;
 use TelstraTPN::Object::Classification;
 use TelstraTPN::Object::Contract;
@@ -323,34 +325,31 @@ use TelstraTPN::Object::Error;
 use TelstraTPN::Object::Error74;
 use TelstraTPN::Object::Flavor;
 use TelstraTPN::Object::GlanceImage;
+use TelstraTPN::Object::InventoryDatacenters401Error;
+use TelstraTPN::Object::InventoryDatacentersResponse;
+use TelstraTPN::Object::InventoryEndpointResponse;
+use TelstraTPN::Object::InventoryEndpointsCustomeruuidResponse;
+use TelstraTPN::Object::InventoryLinkRequest;
+use TelstraTPN::Object::InventoryLinkResponse;
+use TelstraTPN::Object::InventoryLinksContractRequest;
+use TelstraTPN::Object::InventoryLinksContractRequest37;
+use TelstraTPN::Object::InventoryLinksContractResponse;
+use TelstraTPN::Object::InventoryLinksContractResponse33;
+use TelstraTPN::Object::InventoryLinksContractResponse38;
+use TelstraTPN::Object::InventoryLinksHistoryResponse;
+use TelstraTPN::Object::InventoryLinksResponse;
+use TelstraTPN::Object::InventoryRegularendpointRequest;
+use TelstraTPN::Object::InventoryRegularendpointResponse;
+use TelstraTPN::Object::InventoryRegularvportRequest;
+use TelstraTPN::Object::InventoryRegularvportResponse;
+use TelstraTPN::Object::InventoryVnfVportRequest;
+use TelstraTPN::Object::InventoryVnfVportResponse;
+use TelstraTPN::Object::InventoryVnfendpointRequest;
+use TelstraTPN::Object::InventoryVnfendpointResponse;
 use TelstraTPN::Object::Link;
 use TelstraTPN::Object::Link66;
+use TelstraTPN::Object::MarketplaceImageResponse;
 use TelstraTPN::Object::Meta;
-use TelstraTPN::Object::Model100AccountResponse;
-use TelstraTPN::Object::Model100AuthGeneratetokenResponse;
-use TelstraTPN::Object::Model100AuthValidatetokenResponse;
-use TelstraTPN::Object::Model100InventoryDatacenters401Error;
-use TelstraTPN::Object::Model100InventoryDatacentersResponse;
-use TelstraTPN::Object::Model100InventoryEndpointResponse;
-use TelstraTPN::Object::Model100InventoryEndpointsCustomeruuidResponse;
-use TelstraTPN::Object::Model100InventoryLinkRequest;
-use TelstraTPN::Object::Model100InventoryLinkResponse;
-use TelstraTPN::Object::Model100InventoryLinksContractRequest;
-use TelstraTPN::Object::Model100InventoryLinksContractRequest37;
-use TelstraTPN::Object::Model100InventoryLinksContractResponse;
-use TelstraTPN::Object::Model100InventoryLinksContractResponse33;
-use TelstraTPN::Object::Model100InventoryLinksContractResponse38;
-use TelstraTPN::Object::Model100InventoryLinksHistoryResponse;
-use TelstraTPN::Object::Model100InventoryLinksResponse;
-use TelstraTPN::Object::Model100InventoryRegularendpointRequest;
-use TelstraTPN::Object::Model100InventoryRegularendpointResponse;
-use TelstraTPN::Object::Model100InventoryRegularvportRequest;
-use TelstraTPN::Object::Model100InventoryRegularvportResponse;
-use TelstraTPN::Object::Model100InventoryVnfVportRequest;
-use TelstraTPN::Object::Model100InventoryVnfVportResponse;
-use TelstraTPN::Object::Model100InventoryVnfendpointRequest;
-use TelstraTPN::Object::Model100InventoryVnfendpointResponse;
-use TelstraTPN::Object::Model100MarketplaceImageResponse;
 use TelstraTPN::Object::Object52;
 use TelstraTPN::Object::Params;
 use TelstraTPN::Object::Params31;
@@ -370,20 +369,21 @@ use TelstraTPN::Object::Vportvalue;
 
 # for displaying the API response data
 use Data::Dumper;
-use TelstraTPN::Configuration;
 use TelstraTPN::;
 
-my $api_instance = TelstraTPN::AuthenticationApi->new();
+my $api_instance = TelstraTPN::->new(
+);
+
 my $grant_type = 'grant_type_example'; # string | 
 my $username = 'username_example'; # string | 
 my $password = 'password_example'; # string | 
 
 eval {
-    my $result = $api_instance->100_auth_generatetoken_post(grant_type => $grant_type, username => $username, password => $password);
+    my $result = $api_instance->auth_generatetoken_post(grant_type => $grant_type, username => $username, password => $password);
     print Dumper($result);
 };
 if ($@) {
-    warn "Exception when calling AuthenticationApi->100_auth_generatetoken_post: $@\n";
+    warn "Exception when calling AuthenticationApi->auth_generatetoken_post: $@\n";
 }
 
 ```
@@ -394,36 +394,39 @@ All URIs are relative to *https://penapi.pacnetconnect.com*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*AuthenticationApi* | [**100_auth_generatetoken_post**](docs/AuthenticationApi.md#100_auth_generatetoken_post) | **POST** /1.0.0/auth/generatetoken | Create an authentication token
-*AuthenticationApi* | [**100_auth_validatetoken_get**](docs/AuthenticationApi.md#100_auth_validatetoken_get) | **GET** /1.0.0/auth/validatetoken | Validate authentication token
-*ContractsApi* | [**100_inventory_links_contract_by_linkid_and_contractid_get**](docs/ContractsApi.md#100_inventory_links_contract_by_linkid_and_contractid_get) | **GET** /1.0.0/inventory/links/{linkid}/contract/{contractid} | Get active Contract by ContractID
-*ContractsApi* | [**100_inventory_links_contract_by_linkid_and_contractid_put**](docs/ContractsApi.md#100_inventory_links_contract_by_linkid_and_contractid_put) | **PUT** /1.0.0/inventory/links/{linkid}/contract/{contractid} | Update active Contract by ContractID
-*ContractsApi* | [**100_inventory_links_contract_by_linkid_post**](docs/ContractsApi.md#100_inventory_links_contract_by_linkid_post) | **POST** /1.0.0/inventory/links/{linkid}/contract | Create new Contract on specified link
-*CustomersApi* | [**100_account_by_customeruuid_get**](docs/CustomersApi.md#100_account_by_customeruuid_get) | **GET** /1.0.0/account/{customeruuid} | Get account information details
-*CustomersApi* | [**100_account_user_by_customeruuid_get**](docs/CustomersApi.md#100_account_user_by_customeruuid_get) | **GET** /1.0.0/account/{customeruuid}/user | List users
-*DatacentresApi* | [**100_inventory_datacenters_get**](docs/DatacentresApi.md#100_inventory_datacenters_get) | **GET** /1.0.0/inventory/datacenters | Get list of all the data centers
-*EndpointsApi* | [**100_inventory_endpoint_by_endpointuuid_get**](docs/EndpointsApi.md#100_inventory_endpoint_by_endpointuuid_get) | **GET** /1.0.0/inventory/endpoint/{endpointuuid} | Get information about the specified endpoint
-*EndpointsApi* | [**100_inventory_endpoints_customeruuid_by_customeruuid_get**](docs/EndpointsApi.md#100_inventory_endpoints_customeruuid_by_customeruuid_get) | **GET** /1.0.0/inventory/endpoints/customeruuid/{customeruuid} | Get list of endpoints for a customer
-*EndpointsApi* | [**100_inventory_regularendpoint_post**](docs/EndpointsApi.md#100_inventory_regularendpoint_post) | **POST** /1.0.0/inventory/regularendpoint | Create Physical (Port) Endpoint
-*EndpointsApi* | [**100_inventory_vnfendpoint_post**](docs/EndpointsApi.md#100_inventory_vnfendpoint_post) | **POST** /1.0.0/inventory/vnfendpoint | Create VNF Endpoint
+*AuthenticationApi* | [**auth_generatetoken_post**](docs/AuthenticationApi.md#auth_generatetoken_post) | **POST** /1.0.0/auth/generatetoken | Create an authentication token
+*AuthenticationApi* | [**auth_validatetoken_get**](docs/AuthenticationApi.md#auth_validatetoken_get) | **GET** /1.0.0/auth/validatetoken | Validate authentication token
+*ContractsApi* | [**inventory_links_contract_by_linkid_and_contractid_get**](docs/ContractsApi.md#inventory_links_contract_by_linkid_and_contractid_get) | **GET** /1.0.0/inventory/links/{linkid}/contract/{contractid} | Get active Contract by ContractID
+*ContractsApi* | [**inventory_links_contract_by_linkid_and_contractid_put**](docs/ContractsApi.md#inventory_links_contract_by_linkid_and_contractid_put) | **PUT** /1.0.0/inventory/links/{linkid}/contract/{contractid} | Update active Contract by ContractID
+*ContractsApi* | [**inventory_links_contract_by_linkid_post**](docs/ContractsApi.md#inventory_links_contract_by_linkid_post) | **POST** /1.0.0/inventory/links/{linkid}/contract | Create new Contract on specified link
+*CustomersApi* | [**account_by_customeruuid_get**](docs/CustomersApi.md#account_by_customeruuid_get) | **GET** /1.0.0/account/{customeruuid} | Get account information details
+*CustomersApi* | [**account_user_by_customeruuid_get**](docs/CustomersApi.md#account_user_by_customeruuid_get) | **GET** /1.0.0/account/{customeruuid}/user | List users
+*DatacentresApi* | [**inventory_datacenters_get**](docs/DatacentresApi.md#inventory_datacenters_get) | **GET** /1.0.0/inventory/datacenters | Get list of all the data centers
 *EndpointsApi* | [**eis100_endpoints_assign_topology_tag_by_endpointuuid_post**](docs/EndpointsApi.md#eis100_endpoints_assign_topology_tag_by_endpointuuid_post) | **POST** /eis/1.0.0/endpoints/{endpointuuid}/assign_topology_tag | Assign a Topology Tag to an Endpoint
-*LinksApi* | [**100_inventory_link_post**](docs/LinksApi.md#100_inventory_link_post) | **POST** /1.0.0/inventory/link | Create Link and initial Contract
-*LinksApi* | [**100_inventory_links_by_linkid_get**](docs/LinksApi.md#100_inventory_links_by_linkid_get) | **GET** /1.0.0/inventory/links/{linkid} | Get details of specified link
-*LinksApi* | [**100_inventory_links_customer_by_customeruuid_get**](docs/LinksApi.md#100_inventory_links_customer_by_customeruuid_get) | **GET** /1.0.0/inventory/links/customer/{customeruuid} | Get active Links
-*LinksApi* | [**100_inventory_links_history_by_linkid_get**](docs/LinksApi.md#100_inventory_links_history_by_linkid_get) | **GET** /1.0.0/inventory/links/history/{linkid} | Get Link history
+*EndpointsApi* | [**inventory_endpoint_by_endpointuuid_get**](docs/EndpointsApi.md#inventory_endpoint_by_endpointuuid_get) | **GET** /1.0.0/inventory/endpoint/{endpointuuid} | Get information about the specified endpoint
+*EndpointsApi* | [**inventory_endpoints_customeruuid_by_customeruuid_get**](docs/EndpointsApi.md#inventory_endpoints_customeruuid_by_customeruuid_get) | **GET** /1.0.0/inventory/endpoints/customeruuid/{customeruuid} | Get list of endpoints for a customer
+*EndpointsApi* | [**inventory_regularendpoint_post**](docs/EndpointsApi.md#inventory_regularendpoint_post) | **POST** /1.0.0/inventory/regularendpoint | Create Physical (Port) Endpoint
+*EndpointsApi* | [**inventory_vnfendpoint_post**](docs/EndpointsApi.md#inventory_vnfendpoint_post) | **POST** /1.0.0/inventory/vnfendpoint | Create VNF Endpoint
+*LinksApi* | [**inventory_link_post**](docs/LinksApi.md#inventory_link_post) | **POST** /1.0.0/inventory/link | Create Link and initial Contract
+*LinksApi* | [**inventory_links_by_linkid_get**](docs/LinksApi.md#inventory_links_by_linkid_get) | **GET** /1.0.0/inventory/links/{linkid} | Get details of specified link
+*LinksApi* | [**inventory_links_customer_by_customeruuid_get**](docs/LinksApi.md#inventory_links_customer_by_customeruuid_get) | **GET** /1.0.0/inventory/links/customer/{customeruuid} | Get active Links
+*LinksApi* | [**inventory_links_history_by_linkid_get**](docs/LinksApi.md#inventory_links_history_by_linkid_get) | **GET** /1.0.0/inventory/links/history/{linkid} | Get Link history
 *TopologiesApi* | [**ttms100_topology_tag_by_topotaguuid_delete**](docs/TopologiesApi.md#ttms100_topology_tag_by_topotaguuid_delete) | **DELETE** /ttms/1.0.0/topology_tag/{topotaguuid}/ | Delete a topology tag
 *TopologiesApi* | [**ttms100_topology_tag_by_topotaguuid_get**](docs/TopologiesApi.md#ttms100_topology_tag_by_topotaguuid_get) | **GET** /ttms/1.0.0/topology_tag/{topotaguuid}/ | Get information about the specified topology tag
 *TopologiesApi* | [**ttms100_topology_tag_by_topotaguuid_put**](docs/TopologiesApi.md#ttms100_topology_tag_by_topotaguuid_put) | **PUT** /ttms/1.0.0/topology_tag/{topotaguuid}/ | Update a topology tag&#39;s name and/or description
 *TopologiesApi* | [**ttms100_topology_tag_get**](docs/TopologiesApi.md#ttms100_topology_tag_get) | **GET** /ttms/1.0.0/topology_tag | List all topology tags
 *TopologiesApi* | [**ttms100_topology_tag_objects_by_topotaguuid_get**](docs/TopologiesApi.md#ttms100_topology_tag_objects_by_topotaguuid_get) | **GET** /ttms/1.0.0/topology_tag/{topotaguuid}/objects/ | List objects for Topology
 *TopologiesApi* | [**ttms100_topology_tag_post**](docs/TopologiesApi.md#ttms100_topology_tag_post) | **POST** /ttms/1.0.0/topology_tag | Create a named topology tag
-*VnfsApi* | [**100_marketplace_image_get**](docs/VnfsApi.md#100_marketplace_image_get) | **GET** /1.0.0/marketplace/image | List images in the Marketplace
-*VportsApi* | [**100_inventory_regularvport_post**](docs/VportsApi.md#100_inventory_regularvport_post) | **POST** /1.0.0/inventory/regularvport | Create VPort for physical endpoint
-*VportsApi* | [**100_inventory_vnf_vport_post**](docs/VportsApi.md#100_inventory_vnf_vport_post) | **POST** /1.0.0/inventory/vnf/vport | Create VNF VPort
-*VportsApi* | [**100_inventory_vport_by_vportuuid_get**](docs/VportsApi.md#100_inventory_vport_by_vportuuid_get) | **GET** /1.0.0/inventory/vport/{vportuuid} | Get information about the specified VPort
+*VnfsApi* | [**marketplace_image_get**](docs/VnfsApi.md#marketplace_image_get) | **GET** /1.0.0/marketplace/image | List images in the Marketplace
+*VportsApi* | [**inventory_regularvport_post**](docs/VportsApi.md#inventory_regularvport_post) | **POST** /1.0.0/inventory/regularvport | Create VPort for physical endpoint
+*VportsApi* | [**inventory_vnf_vport_post**](docs/VportsApi.md#inventory_vnf_vport_post) | **POST** /1.0.0/inventory/vnf/vport | Create VNF VPort
+*VportsApi* | [**inventory_vport_by_vportuuid_get**](docs/VportsApi.md#inventory_vport_by_vportuuid_get) | **GET** /1.0.0/inventory/vport/{vportuuid} | Get information about the specified VPort
 
 
 # DOCUMENTATION FOR MODELS
+ - [TelstraTPN::Object::AccountResponse](docs/AccountResponse.md)
+ - [TelstraTPN::Object::AuthGeneratetokenResponse](docs/AuthGeneratetokenResponse.md)
+ - [TelstraTPN::Object::AuthValidatetokenResponse](docs/AuthValidatetokenResponse.md)
  - [TelstraTPN::Object::Billing](docs/Billing.md)
  - [TelstraTPN::Object::Classification](docs/Classification.md)
  - [TelstraTPN::Object::Contract](docs/Contract.md)
@@ -436,34 +439,31 @@ Class | Method | HTTP request | Description
  - [TelstraTPN::Object::Error74](docs/Error74.md)
  - [TelstraTPN::Object::Flavor](docs/Flavor.md)
  - [TelstraTPN::Object::GlanceImage](docs/GlanceImage.md)
+ - [TelstraTPN::Object::InventoryDatacenters401Error](docs/InventoryDatacenters401Error.md)
+ - [TelstraTPN::Object::InventoryDatacentersResponse](docs/InventoryDatacentersResponse.md)
+ - [TelstraTPN::Object::InventoryEndpointResponse](docs/InventoryEndpointResponse.md)
+ - [TelstraTPN::Object::InventoryEndpointsCustomeruuidResponse](docs/InventoryEndpointsCustomeruuidResponse.md)
+ - [TelstraTPN::Object::InventoryLinkRequest](docs/InventoryLinkRequest.md)
+ - [TelstraTPN::Object::InventoryLinkResponse](docs/InventoryLinkResponse.md)
+ - [TelstraTPN::Object::InventoryLinksContractRequest](docs/InventoryLinksContractRequest.md)
+ - [TelstraTPN::Object::InventoryLinksContractRequest37](docs/InventoryLinksContractRequest37.md)
+ - [TelstraTPN::Object::InventoryLinksContractResponse](docs/InventoryLinksContractResponse.md)
+ - [TelstraTPN::Object::InventoryLinksContractResponse33](docs/InventoryLinksContractResponse33.md)
+ - [TelstraTPN::Object::InventoryLinksContractResponse38](docs/InventoryLinksContractResponse38.md)
+ - [TelstraTPN::Object::InventoryLinksHistoryResponse](docs/InventoryLinksHistoryResponse.md)
+ - [TelstraTPN::Object::InventoryLinksResponse](docs/InventoryLinksResponse.md)
+ - [TelstraTPN::Object::InventoryRegularendpointRequest](docs/InventoryRegularendpointRequest.md)
+ - [TelstraTPN::Object::InventoryRegularendpointResponse](docs/InventoryRegularendpointResponse.md)
+ - [TelstraTPN::Object::InventoryRegularvportRequest](docs/InventoryRegularvportRequest.md)
+ - [TelstraTPN::Object::InventoryRegularvportResponse](docs/InventoryRegularvportResponse.md)
+ - [TelstraTPN::Object::InventoryVnfVportRequest](docs/InventoryVnfVportRequest.md)
+ - [TelstraTPN::Object::InventoryVnfVportResponse](docs/InventoryVnfVportResponse.md)
+ - [TelstraTPN::Object::InventoryVnfendpointRequest](docs/InventoryVnfendpointRequest.md)
+ - [TelstraTPN::Object::InventoryVnfendpointResponse](docs/InventoryVnfendpointResponse.md)
  - [TelstraTPN::Object::Link](docs/Link.md)
  - [TelstraTPN::Object::Link66](docs/Link66.md)
+ - [TelstraTPN::Object::MarketplaceImageResponse](docs/MarketplaceImageResponse.md)
  - [TelstraTPN::Object::Meta](docs/Meta.md)
- - [TelstraTPN::Object::Model100AccountResponse](docs/Model100AccountResponse.md)
- - [TelstraTPN::Object::Model100AuthGeneratetokenResponse](docs/Model100AuthGeneratetokenResponse.md)
- - [TelstraTPN::Object::Model100AuthValidatetokenResponse](docs/Model100AuthValidatetokenResponse.md)
- - [TelstraTPN::Object::Model100InventoryDatacenters401Error](docs/Model100InventoryDatacenters401Error.md)
- - [TelstraTPN::Object::Model100InventoryDatacentersResponse](docs/Model100InventoryDatacentersResponse.md)
- - [TelstraTPN::Object::Model100InventoryEndpointResponse](docs/Model100InventoryEndpointResponse.md)
- - [TelstraTPN::Object::Model100InventoryEndpointsCustomeruuidResponse](docs/Model100InventoryEndpointsCustomeruuidResponse.md)
- - [TelstraTPN::Object::Model100InventoryLinkRequest](docs/Model100InventoryLinkRequest.md)
- - [TelstraTPN::Object::Model100InventoryLinkResponse](docs/Model100InventoryLinkResponse.md)
- - [TelstraTPN::Object::Model100InventoryLinksContractRequest](docs/Model100InventoryLinksContractRequest.md)
- - [TelstraTPN::Object::Model100InventoryLinksContractRequest37](docs/Model100InventoryLinksContractRequest37.md)
- - [TelstraTPN::Object::Model100InventoryLinksContractResponse](docs/Model100InventoryLinksContractResponse.md)
- - [TelstraTPN::Object::Model100InventoryLinksContractResponse33](docs/Model100InventoryLinksContractResponse33.md)
- - [TelstraTPN::Object::Model100InventoryLinksContractResponse38](docs/Model100InventoryLinksContractResponse38.md)
- - [TelstraTPN::Object::Model100InventoryLinksHistoryResponse](docs/Model100InventoryLinksHistoryResponse.md)
- - [TelstraTPN::Object::Model100InventoryLinksResponse](docs/Model100InventoryLinksResponse.md)
- - [TelstraTPN::Object::Model100InventoryRegularendpointRequest](docs/Model100InventoryRegularendpointRequest.md)
- - [TelstraTPN::Object::Model100InventoryRegularendpointResponse](docs/Model100InventoryRegularendpointResponse.md)
- - [TelstraTPN::Object::Model100InventoryRegularvportRequest](docs/Model100InventoryRegularvportRequest.md)
- - [TelstraTPN::Object::Model100InventoryRegularvportResponse](docs/Model100InventoryRegularvportResponse.md)
- - [TelstraTPN::Object::Model100InventoryVnfVportRequest](docs/Model100InventoryVnfVportRequest.md)
- - [TelstraTPN::Object::Model100InventoryVnfVportResponse](docs/Model100InventoryVnfVportResponse.md)
- - [TelstraTPN::Object::Model100InventoryVnfendpointRequest](docs/Model100InventoryVnfendpointRequest.md)
- - [TelstraTPN::Object::Model100InventoryVnfendpointResponse](docs/Model100InventoryVnfendpointResponse.md)
- - [TelstraTPN::Object::Model100MarketplaceImageResponse](docs/Model100MarketplaceImageResponse.md)
  - [TelstraTPN::Object::Object52](docs/Object52.md)
  - [TelstraTPN::Object::Params](docs/Params.md)
  - [TelstraTPN::Object::Params31](docs/Params31.md)
@@ -480,3 +480,15 @@ Class | Method | HTTP request | Description
  - [TelstraTPN::Object::VnfTag](docs/VnfTag.md)
  - [TelstraTPN::Object::Vport](docs/Vport.md)
  - [TelstraTPN::Object::Vportvalue](docs/Vportvalue.md)
+
+
+# DOCUMENTATION FOR AUTHORIZATION
+
+## auth
+
+- **Type**: OAuth
+- **Flow**: password
+- **Authorization URL**: 
+- **Scopes**: 
+  - **Oauth2**: Oauth2
+

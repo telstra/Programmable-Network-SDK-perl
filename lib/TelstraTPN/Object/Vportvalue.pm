@@ -30,6 +30,8 @@ use Log::Any qw($log);
 use Date::Parse;
 use DateTime;
 
+use TelstraTPN::Object::Vlan;
+
 use base ("Class::Accessor", "Class::Data::Inheritable");
 
 

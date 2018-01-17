@@ -28,31 +28,28 @@ use Carp qw( croak );
 use Log::Any qw($log);
 
 use TelstraTPN::ApiClient;
-use TelstraTPN::Configuration;
 
 use base "Class::Data::Inheritable";
 
 __PACKAGE__->mk_classdata('method_documentation' => {});
 
 sub new {
-    my $class   = shift;
-    my (%self) = (
-        'api_client' => TelstraTPN::ApiClient->instance,
-        @_
-    );
+    my $class = shift;
+    my $api_client;
 
-    #my $self = {
-    #    #api_client => $options->{api_client}
-    #    api_client => $default_api_client
-    #}; 
+    if ($_[0] && ref $_[0] && ref $_[0] eq 'TelstraTPN::ApiClient' ) {
+        $api_client = $_[0];
+    } else {
+        $api_client = TelstraTPN::ApiClient->new(@_);
+    }
 
-    bless \%self, $class;
+    bless { api_client => $api_client }, $class;
 
 }
 
 
 #
-# 100_inventory_links_contract_by_linkid_and_contractid_get
+# inventory_links_contract_by_linkid_and_contractid_get
 #
 # Get active Contract by ContractID
 # 
@@ -71,25 +68,25 @@ sub new {
         required => '1',
     },
     };
-    __PACKAGE__->method_documentation->{ '100_inventory_links_contract_by_linkid_and_contractid_get' } = { 
+    __PACKAGE__->method_documentation->{ 'inventory_links_contract_by_linkid_and_contractid_get' } = { 
     	summary => 'Get active Contract by ContractID',
         params => $params,
-        returns => 'Model100InventoryLinksContractResponse',
+        returns => 'InventoryLinksContractResponse',
         };
 }
-# @return Model100InventoryLinksContractResponse
+# @return InventoryLinksContractResponse
 #
-sub 100_inventory_links_contract_by_linkid_and_contractid_get {
+sub inventory_links_contract_by_linkid_and_contractid_get {
     my ($self, %args) = @_;
 
     # verify the required parameter 'linkid' is set
     unless (exists $args{'linkid'}) {
-      croak("Missing the required parameter 'linkid' when calling 100_inventory_links_contract_by_linkid_and_contractid_get");
+      croak("Missing the required parameter 'linkid' when calling inventory_links_contract_by_linkid_and_contractid_get");
     }
 
     # verify the required parameter 'contractid' is set
     unless (exists $args{'contractid'}) {
-      croak("Missing the required parameter 'contractid' when calling 100_inventory_links_contract_by_linkid_and_contractid_get");
+      croak("Missing the required parameter 'contractid' when calling inventory_links_contract_by_linkid_and_contractid_get");
     }
 
     # parse inputs
@@ -123,7 +120,7 @@ sub 100_inventory_links_contract_by_linkid_and_contractid_get {
 
     my $_body_data;
     # authentication setting, if any
-    my $auth_settings = [qw()];
+    my $auth_settings = [qw(auth )];
 
     # make the API Call
     my $response = $self->{api_client}->call_api($_resource_path, $_method,
@@ -132,18 +129,18 @@ sub 100_inventory_links_contract_by_linkid_and_contractid_get {
     if (!$response) {
         return;
     }
-    my $_response_object = $self->{api_client}->deserialize('Model100InventoryLinksContractResponse', $response);
+    my $_response_object = $self->{api_client}->deserialize('InventoryLinksContractResponse', $response);
     return $_response_object;
 }
 
 #
-# 100_inventory_links_contract_by_linkid_and_contractid_put
+# inventory_links_contract_by_linkid_and_contractid_put
 #
 # Update active Contract by ContractID
 # 
 # @param string $linkid Unique identifier representing a specific link (required)
 # @param string $contractid Unique identifier representing a specific contract (required)
-# @param Model100InventoryLinksContractRequest $body  (optional)
+# @param InventoryLinksContractRequest $body  (optional)
 {
     my $params = {
     'linkid' => {
@@ -157,30 +154,30 @@ sub 100_inventory_links_contract_by_linkid_and_contractid_get {
         required => '1',
     },
     'body' => {
-        data_type => 'Model100InventoryLinksContractRequest',
+        data_type => 'InventoryLinksContractRequest',
         description => '',
         required => '0',
     },
     };
-    __PACKAGE__->method_documentation->{ '100_inventory_links_contract_by_linkid_and_contractid_put' } = { 
+    __PACKAGE__->method_documentation->{ 'inventory_links_contract_by_linkid_and_contractid_put' } = { 
     	summary => 'Update active Contract by ContractID',
         params => $params,
-        returns => 'Model100InventoryLinksContractResponse33',
+        returns => 'InventoryLinksContractResponse33',
         };
 }
-# @return Model100InventoryLinksContractResponse33
+# @return InventoryLinksContractResponse33
 #
-sub 100_inventory_links_contract_by_linkid_and_contractid_put {
+sub inventory_links_contract_by_linkid_and_contractid_put {
     my ($self, %args) = @_;
 
     # verify the required parameter 'linkid' is set
     unless (exists $args{'linkid'}) {
-      croak("Missing the required parameter 'linkid' when calling 100_inventory_links_contract_by_linkid_and_contractid_put");
+      croak("Missing the required parameter 'linkid' when calling inventory_links_contract_by_linkid_and_contractid_put");
     }
 
     # verify the required parameter 'contractid' is set
     unless (exists $args{'contractid'}) {
-      croak("Missing the required parameter 'contractid' when calling 100_inventory_links_contract_by_linkid_and_contractid_put");
+      croak("Missing the required parameter 'contractid' when calling inventory_links_contract_by_linkid_and_contractid_put");
     }
 
     # parse inputs
@@ -219,7 +216,7 @@ sub 100_inventory_links_contract_by_linkid_and_contractid_put {
     }
 
     # authentication setting, if any
-    my $auth_settings = [qw()];
+    my $auth_settings = [qw(auth )];
 
     # make the API Call
     my $response = $self->{api_client}->call_api($_resource_path, $_method,
@@ -228,17 +225,17 @@ sub 100_inventory_links_contract_by_linkid_and_contractid_put {
     if (!$response) {
         return;
     }
-    my $_response_object = $self->{api_client}->deserialize('Model100InventoryLinksContractResponse33', $response);
+    my $_response_object = $self->{api_client}->deserialize('InventoryLinksContractResponse33', $response);
     return $_response_object;
 }
 
 #
-# 100_inventory_links_contract_by_linkid_post
+# inventory_links_contract_by_linkid_post
 #
 # Create new Contract on specified link
 # 
 # @param string $linkid Unique identifier representing a specific link (required)
-# @param Model100InventoryLinksContractRequest37 $body  (optional)
+# @param InventoryLinksContractRequest37 $body  (optional)
 {
     my $params = {
     'linkid' => {
@@ -247,25 +244,25 @@ sub 100_inventory_links_contract_by_linkid_and_contractid_put {
         required => '1',
     },
     'body' => {
-        data_type => 'Model100InventoryLinksContractRequest37',
+        data_type => 'InventoryLinksContractRequest37',
         description => '',
         required => '0',
     },
     };
-    __PACKAGE__->method_documentation->{ '100_inventory_links_contract_by_linkid_post' } = { 
+    __PACKAGE__->method_documentation->{ 'inventory_links_contract_by_linkid_post' } = { 
     	summary => 'Create new Contract on specified link',
         params => $params,
-        returns => 'Model100InventoryLinksContractResponse38',
+        returns => 'ARRAY[InventoryLinksContractResponse38]',
         };
 }
-# @return Model100InventoryLinksContractResponse38
+# @return ARRAY[InventoryLinksContractResponse38]
 #
-sub 100_inventory_links_contract_by_linkid_post {
+sub inventory_links_contract_by_linkid_post {
     my ($self, %args) = @_;
 
     # verify the required parameter 'linkid' is set
     unless (exists $args{'linkid'}) {
-      croak("Missing the required parameter 'linkid' when calling 100_inventory_links_contract_by_linkid_post");
+      croak("Missing the required parameter 'linkid' when calling inventory_links_contract_by_linkid_post");
     }
 
     # parse inputs
@@ -297,7 +294,7 @@ sub 100_inventory_links_contract_by_linkid_post {
     }
 
     # authentication setting, if any
-    my $auth_settings = [qw()];
+    my $auth_settings = [qw(auth )];
 
     # make the API Call
     my $response = $self->{api_client}->call_api($_resource_path, $_method,
@@ -306,7 +303,7 @@ sub 100_inventory_links_contract_by_linkid_post {
     if (!$response) {
         return;
     }
-    my $_response_object = $self->{api_client}->deserialize('Model100InventoryLinksContractResponse38', $response);
+    my $_response_object = $self->{api_client}->deserialize('ARRAY[InventoryLinksContractResponse38]', $response);
     return $_response_object;
 }
 

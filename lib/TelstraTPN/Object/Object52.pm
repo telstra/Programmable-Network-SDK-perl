@@ -30,6 +30,12 @@ use Log::Any qw($log);
 use Date::Parse;
 use DateTime;
 
+use TelstraTPN::Object::Classification;
+use TelstraTPN::Object::Flavor;
+use TelstraTPN::Object::GlanceImage;
+use TelstraTPN::Object::Product;
+use TelstraTPN::Object::VnfTag;
+
 use base ("Class::Accessor", "Class::Data::Inheritable");
 
 

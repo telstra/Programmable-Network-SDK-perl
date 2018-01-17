@@ -28,52 +28,49 @@ use Carp qw( croak );
 use Log::Any qw($log);
 
 use TelstraTPN::ApiClient;
-use TelstraTPN::Configuration;
 
 use base "Class::Data::Inheritable";
 
 __PACKAGE__->mk_classdata('method_documentation' => {});
 
 sub new {
-    my $class   = shift;
-    my (%self) = (
-        'api_client' => TelstraTPN::ApiClient->instance,
-        @_
-    );
+    my $class = shift;
+    my $api_client;
 
-    #my $self = {
-    #    #api_client => $options->{api_client}
-    #    api_client => $default_api_client
-    #}; 
+    if ($_[0] && ref $_[0] && ref $_[0] eq 'TelstraTPN::ApiClient' ) {
+        $api_client = $_[0];
+    } else {
+        $api_client = TelstraTPN::ApiClient->new(@_);
+    }
 
-    bless \%self, $class;
+    bless { api_client => $api_client }, $class;
 
 }
 
 
 #
-# 100_inventory_link_post
+# inventory_link_post
 #
 # Create Link and initial Contract
 # 
-# @param Model100InventoryLinkRequest $body  (optional)
+# @param InventoryLinkRequest $body  (optional)
 {
     my $params = {
     'body' => {
-        data_type => 'Model100InventoryLinkRequest',
+        data_type => 'InventoryLinkRequest',
         description => '',
         required => '0',
     },
     };
-    __PACKAGE__->method_documentation->{ '100_inventory_link_post' } = { 
+    __PACKAGE__->method_documentation->{ 'inventory_link_post' } = { 
     	summary => 'Create Link and initial Contract',
         params => $params,
-        returns => 'Model100InventoryLinkResponse',
+        returns => 'InventoryLinkResponse',
         };
 }
-# @return Model100InventoryLinkResponse
+# @return InventoryLinkResponse
 #
-sub 100_inventory_link_post {
+sub inventory_link_post {
     my ($self, %args) = @_;
 
     # parse inputs
@@ -98,7 +95,7 @@ sub 100_inventory_link_post {
     }
 
     # authentication setting, if any
-    my $auth_settings = [qw()];
+    my $auth_settings = [qw(auth )];
 
     # make the API Call
     my $response = $self->{api_client}->call_api($_resource_path, $_method,
@@ -107,12 +104,12 @@ sub 100_inventory_link_post {
     if (!$response) {
         return;
     }
-    my $_response_object = $self->{api_client}->deserialize('Model100InventoryLinkResponse', $response);
+    my $_response_object = $self->{api_client}->deserialize('InventoryLinkResponse', $response);
     return $_response_object;
 }
 
 #
-# 100_inventory_links_by_linkid_get
+# inventory_links_by_linkid_get
 #
 # Get details of specified link
 # 
@@ -125,20 +122,20 @@ sub 100_inventory_link_post {
         required => '1',
     },
     };
-    __PACKAGE__->method_documentation->{ '100_inventory_links_by_linkid_get' } = { 
+    __PACKAGE__->method_documentation->{ 'inventory_links_by_linkid_get' } = { 
     	summary => 'Get details of specified link',
         params => $params,
-        returns => 'Model100InventoryLinksResponse',
+        returns => 'InventoryLinksResponse',
         };
 }
-# @return Model100InventoryLinksResponse
+# @return InventoryLinksResponse
 #
-sub 100_inventory_links_by_linkid_get {
+sub inventory_links_by_linkid_get {
     my ($self, %args) = @_;
 
     # verify the required parameter 'linkid' is set
     unless (exists $args{'linkid'}) {
-      croak("Missing the required parameter 'linkid' when calling 100_inventory_links_by_linkid_get");
+      croak("Missing the required parameter 'linkid' when calling inventory_links_by_linkid_get");
     }
 
     # parse inputs
@@ -165,7 +162,7 @@ sub 100_inventory_links_by_linkid_get {
 
     my $_body_data;
     # authentication setting, if any
-    my $auth_settings = [qw()];
+    my $auth_settings = [qw(auth )];
 
     # make the API Call
     my $response = $self->{api_client}->call_api($_resource_path, $_method,
@@ -174,12 +171,12 @@ sub 100_inventory_links_by_linkid_get {
     if (!$response) {
         return;
     }
-    my $_response_object = $self->{api_client}->deserialize('Model100InventoryLinksResponse', $response);
+    my $_response_object = $self->{api_client}->deserialize('InventoryLinksResponse', $response);
     return $_response_object;
 }
 
 #
-# 100_inventory_links_customer_by_customeruuid_get
+# inventory_links_customer_by_customeruuid_get
 #
 # Get active Links
 # 
@@ -192,7 +189,7 @@ sub 100_inventory_links_by_linkid_get {
         required => '1',
     },
     };
-    __PACKAGE__->method_documentation->{ '100_inventory_links_customer_by_customeruuid_get' } = { 
+    __PACKAGE__->method_documentation->{ 'inventory_links_customer_by_customeruuid_get' } = { 
     	summary => 'Get active Links',
         params => $params,
         returns => 'ARRAY[Link]',
@@ -200,12 +197,12 @@ sub 100_inventory_links_by_linkid_get {
 }
 # @return ARRAY[Link]
 #
-sub 100_inventory_links_customer_by_customeruuid_get {
+sub inventory_links_customer_by_customeruuid_get {
     my ($self, %args) = @_;
 
     # verify the required parameter 'customeruuid' is set
     unless (exists $args{'customeruuid'}) {
-      croak("Missing the required parameter 'customeruuid' when calling 100_inventory_links_customer_by_customeruuid_get");
+      croak("Missing the required parameter 'customeruuid' when calling inventory_links_customer_by_customeruuid_get");
     }
 
     # parse inputs
@@ -232,7 +229,7 @@ sub 100_inventory_links_customer_by_customeruuid_get {
 
     my $_body_data;
     # authentication setting, if any
-    my $auth_settings = [qw()];
+    my $auth_settings = [qw(auth )];
 
     # make the API Call
     my $response = $self->{api_client}->call_api($_resource_path, $_method,
@@ -246,7 +243,7 @@ sub 100_inventory_links_customer_by_customeruuid_get {
 }
 
 #
-# 100_inventory_links_history_by_linkid_get
+# inventory_links_history_by_linkid_get
 #
 # Get Link history
 # 
@@ -259,20 +256,20 @@ sub 100_inventory_links_customer_by_customeruuid_get {
         required => '1',
     },
     };
-    __PACKAGE__->method_documentation->{ '100_inventory_links_history_by_linkid_get' } = { 
+    __PACKAGE__->method_documentation->{ 'inventory_links_history_by_linkid_get' } = { 
     	summary => 'Get Link history',
         params => $params,
-        returns => 'Model100InventoryLinksHistoryResponse',
+        returns => 'InventoryLinksHistoryResponse',
         };
 }
-# @return Model100InventoryLinksHistoryResponse
+# @return InventoryLinksHistoryResponse
 #
-sub 100_inventory_links_history_by_linkid_get {
+sub inventory_links_history_by_linkid_get {
     my ($self, %args) = @_;
 
     # verify the required parameter 'linkid' is set
     unless (exists $args{'linkid'}) {
-      croak("Missing the required parameter 'linkid' when calling 100_inventory_links_history_by_linkid_get");
+      croak("Missing the required parameter 'linkid' when calling inventory_links_history_by_linkid_get");
     }
 
     # parse inputs
@@ -299,7 +296,7 @@ sub 100_inventory_links_history_by_linkid_get {
 
     my $_body_data;
     # authentication setting, if any
-    my $auth_settings = [qw()];
+    my $auth_settings = [qw(auth )];
 
     # make the API Call
     my $response = $self->{api_client}->call_api($_resource_path, $_method,
@@ -308,7 +305,7 @@ sub 100_inventory_links_history_by_linkid_get {
     if (!$response) {
         return;
     }
-    my $_response_object = $self->{api_client}->deserialize('Model100InventoryLinksHistoryResponse', $response);
+    my $_response_object = $self->{api_client}->deserialize('InventoryLinksHistoryResponse', $response);
     return $_response_object;
 }
 

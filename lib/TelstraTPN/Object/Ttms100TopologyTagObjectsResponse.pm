@@ -30,6 +30,9 @@ use Log::Any qw($log);
 use Date::Parse;
 use DateTime;
 
+use TelstraTPN::Object::Endpoint;
+use TelstraTPN::Object::Link66;
+
 use base ("Class::Accessor", "Class::Data::Inheritable");
 
 

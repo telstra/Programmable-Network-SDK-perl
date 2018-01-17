@@ -9,12 +9,12 @@ All URIs are relative to *https://penapi.pacnetconnect.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**100_account_by_customeruuid_get**](CustomersApi.md#100_account_by_customeruuid_get) | **GET** /1.0.0/account/{customeruuid} | Get account information details
-[**100_account_user_by_customeruuid_get**](CustomersApi.md#100_account_user_by_customeruuid_get) | **GET** /1.0.0/account/{customeruuid}/user | List users
+[**account_by_customeruuid_get**](CustomersApi.md#account_by_customeruuid_get) | **GET** /1.0.0/account/{customeruuid} | Get account information details
+[**account_user_by_customeruuid_get**](CustomersApi.md#account_user_by_customeruuid_get) | **GET** /1.0.0/account/{customeruuid}/user | List users
 
 
-# **100_account_by_customeruuid_get**
-> Model100AccountResponse 100_account_by_customeruuid_get(customeruuid => $customeruuid)
+# **account_by_customeruuid_get**
+> ARRAY[AccountResponse] account_by_customeruuid_get(customeruuid => $customeruuid)
 
 Get account information details
 
@@ -23,18 +23,21 @@ Get the account information for the specified customer
 ### Example 
 ```perl
 use Data::Dumper;
-use TelstraTPN::Configuration;
 use TelstraTPN::CustomersApi;
+my $api_instance = TelstraTPN::CustomersApi->new(
 
-my $api_instance = TelstraTPN::CustomersApi->new();
+    # Configure OAuth2 access token for authorization: auth
+    access_token => 'YOUR_ACCESS_TOKEN',
+);
+
 my $customeruuid = 'customeruuid_example'; # string | Unique identifier representing a specific customer
 
 eval { 
-    my $result = $api_instance->100_account_by_customeruuid_get(customeruuid => $customeruuid);
+    my $result = $api_instance->account_by_customeruuid_get(customeruuid => $customeruuid);
     print Dumper($result);
 };
 if ($@) {
-    warn "Exception when calling CustomersApi->100_account_by_customeruuid_get: $@\n";
+    warn "Exception when calling CustomersApi->account_by_customeruuid_get: $@\n";
 }
 ```
 
@@ -46,11 +49,11 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Model100AccountResponse**](Model100AccountResponse.md)
+[**ARRAY[AccountResponse]**](AccountResponse.md)
 
 ### Authorization
 
-No authorization required
+[auth](../README.md#auth)
 
 ### HTTP request headers
 
@@ -59,8 +62,8 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **100_account_user_by_customeruuid_get**
-> ARRAY[User] 100_account_user_by_customeruuid_get(customeruuid => $customeruuid)
+# **account_user_by_customeruuid_get**
+> ARRAY[User] account_user_by_customeruuid_get(customeruuid => $customeruuid)
 
 List users
 
@@ -69,18 +72,21 @@ List all users associated with the specified customer
 ### Example 
 ```perl
 use Data::Dumper;
-use TelstraTPN::Configuration;
 use TelstraTPN::CustomersApi;
+my $api_instance = TelstraTPN::CustomersApi->new(
 
-my $api_instance = TelstraTPN::CustomersApi->new();
+    # Configure OAuth2 access token for authorization: auth
+    access_token => 'YOUR_ACCESS_TOKEN',
+);
+
 my $customeruuid = 'customeruuid_example'; # string | Unique identifier representing a specific customer
 
 eval { 
-    my $result = $api_instance->100_account_user_by_customeruuid_get(customeruuid => $customeruuid);
+    my $result = $api_instance->account_user_by_customeruuid_get(customeruuid => $customeruuid);
     print Dumper($result);
 };
 if ($@) {
-    warn "Exception when calling CustomersApi->100_account_user_by_customeruuid_get: $@\n";
+    warn "Exception when calling CustomersApi->account_user_by_customeruuid_get: $@\n";
 }
 ```
 
@@ -96,7 +102,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[auth](../README.md#auth)
 
 ### HTTP request headers
 

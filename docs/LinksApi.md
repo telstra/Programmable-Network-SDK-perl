@@ -9,14 +9,14 @@ All URIs are relative to *https://penapi.pacnetconnect.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**100_inventory_link_post**](LinksApi.md#100_inventory_link_post) | **POST** /1.0.0/inventory/link | Create Link and initial Contract
-[**100_inventory_links_by_linkid_get**](LinksApi.md#100_inventory_links_by_linkid_get) | **GET** /1.0.0/inventory/links/{linkid} | Get details of specified link
-[**100_inventory_links_customer_by_customeruuid_get**](LinksApi.md#100_inventory_links_customer_by_customeruuid_get) | **GET** /1.0.0/inventory/links/customer/{customeruuid} | Get active Links
-[**100_inventory_links_history_by_linkid_get**](LinksApi.md#100_inventory_links_history_by_linkid_get) | **GET** /1.0.0/inventory/links/history/{linkid} | Get Link history
+[**inventory_link_post**](LinksApi.md#inventory_link_post) | **POST** /1.0.0/inventory/link | Create Link and initial Contract
+[**inventory_links_by_linkid_get**](LinksApi.md#inventory_links_by_linkid_get) | **GET** /1.0.0/inventory/links/{linkid} | Get details of specified link
+[**inventory_links_customer_by_customeruuid_get**](LinksApi.md#inventory_links_customer_by_customeruuid_get) | **GET** /1.0.0/inventory/links/customer/{customeruuid} | Get active Links
+[**inventory_links_history_by_linkid_get**](LinksApi.md#inventory_links_history_by_linkid_get) | **GET** /1.0.0/inventory/links/history/{linkid} | Get Link history
 
 
-# **100_inventory_link_post**
-> Model100InventoryLinkResponse 100_inventory_link_post(body => $body)
+# **inventory_link_post**
+> InventoryLinkResponse inventory_link_post(body => $body)
 
 Create Link and initial Contract
 
@@ -25,18 +25,21 @@ Create Link and initial Contract
 ### Example 
 ```perl
 use Data::Dumper;
-use TelstraTPN::Configuration;
 use TelstraTPN::LinksApi;
+my $api_instance = TelstraTPN::LinksApi->new(
 
-my $api_instance = TelstraTPN::LinksApi->new();
-my $body = TelstraTPN::Object::Model100InventoryLinkRequest->new(); # Model100InventoryLinkRequest | 
+    # Configure OAuth2 access token for authorization: auth
+    access_token => 'YOUR_ACCESS_TOKEN',
+);
+
+my $body = TelstraTPN::Object::InventoryLinkRequest->new(); # InventoryLinkRequest | 
 
 eval { 
-    my $result = $api_instance->100_inventory_link_post(body => $body);
+    my $result = $api_instance->inventory_link_post(body => $body);
     print Dumper($result);
 };
 if ($@) {
-    warn "Exception when calling LinksApi->100_inventory_link_post: $@\n";
+    warn "Exception when calling LinksApi->inventory_link_post: $@\n";
 }
 ```
 
@@ -44,15 +47,15 @@ if ($@) {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**Model100InventoryLinkRequest**](Model100InventoryLinkRequest.md)|  | [optional] 
+ **body** | [**InventoryLinkRequest**](InventoryLinkRequest.md)|  | [optional] 
 
 ### Return type
 
-[**Model100InventoryLinkResponse**](Model100InventoryLinkResponse.md)
+[**InventoryLinkResponse**](InventoryLinkResponse.md)
 
 ### Authorization
 
-No authorization required
+[auth](../README.md#auth)
 
 ### HTTP request headers
 
@@ -61,8 +64,8 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **100_inventory_links_by_linkid_get**
-> Model100InventoryLinksResponse 100_inventory_links_by_linkid_get(linkid => $linkid)
+# **inventory_links_by_linkid_get**
+> InventoryLinksResponse inventory_links_by_linkid_get(linkid => $linkid)
 
 Get details of specified link
 
@@ -71,18 +74,21 @@ Get details of specified link
 ### Example 
 ```perl
 use Data::Dumper;
-use TelstraTPN::Configuration;
 use TelstraTPN::LinksApi;
+my $api_instance = TelstraTPN::LinksApi->new(
 
-my $api_instance = TelstraTPN::LinksApi->new();
+    # Configure OAuth2 access token for authorization: auth
+    access_token => 'YOUR_ACCESS_TOKEN',
+);
+
 my $linkid = 'linkid_example'; # string | Unique identifier representing a specific link
 
 eval { 
-    my $result = $api_instance->100_inventory_links_by_linkid_get(linkid => $linkid);
+    my $result = $api_instance->inventory_links_by_linkid_get(linkid => $linkid);
     print Dumper($result);
 };
 if ($@) {
-    warn "Exception when calling LinksApi->100_inventory_links_by_linkid_get: $@\n";
+    warn "Exception when calling LinksApi->inventory_links_by_linkid_get: $@\n";
 }
 ```
 
@@ -94,11 +100,11 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Model100InventoryLinksResponse**](Model100InventoryLinksResponse.md)
+[**InventoryLinksResponse**](InventoryLinksResponse.md)
 
 ### Authorization
 
-No authorization required
+[auth](../README.md#auth)
 
 ### HTTP request headers
 
@@ -107,8 +113,8 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **100_inventory_links_customer_by_customeruuid_get**
-> ARRAY[Link] 100_inventory_links_customer_by_customeruuid_get(customeruuid => $customeruuid)
+# **inventory_links_customer_by_customeruuid_get**
+> ARRAY[Link] inventory_links_customer_by_customeruuid_get(customeruuid => $customeruuid)
 
 Get active Links
 
@@ -117,18 +123,21 @@ Get active Links
 ### Example 
 ```perl
 use Data::Dumper;
-use TelstraTPN::Configuration;
 use TelstraTPN::LinksApi;
+my $api_instance = TelstraTPN::LinksApi->new(
 
-my $api_instance = TelstraTPN::LinksApi->new();
+    # Configure OAuth2 access token for authorization: auth
+    access_token => 'YOUR_ACCESS_TOKEN',
+);
+
 my $customeruuid = 'customeruuid_example'; # string | Unique identifier representing a specific customer
 
 eval { 
-    my $result = $api_instance->100_inventory_links_customer_by_customeruuid_get(customeruuid => $customeruuid);
+    my $result = $api_instance->inventory_links_customer_by_customeruuid_get(customeruuid => $customeruuid);
     print Dumper($result);
 };
 if ($@) {
-    warn "Exception when calling LinksApi->100_inventory_links_customer_by_customeruuid_get: $@\n";
+    warn "Exception when calling LinksApi->inventory_links_customer_by_customeruuid_get: $@\n";
 }
 ```
 
@@ -144,7 +153,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[auth](../README.md#auth)
 
 ### HTTP request headers
 
@@ -153,8 +162,8 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **100_inventory_links_history_by_linkid_get**
-> Model100InventoryLinksHistoryResponse 100_inventory_links_history_by_linkid_get(linkid => $linkid)
+# **inventory_links_history_by_linkid_get**
+> InventoryLinksHistoryResponse inventory_links_history_by_linkid_get(linkid => $linkid)
 
 Get Link history
 
@@ -163,18 +172,21 @@ Get Link history
 ### Example 
 ```perl
 use Data::Dumper;
-use TelstraTPN::Configuration;
 use TelstraTPN::LinksApi;
+my $api_instance = TelstraTPN::LinksApi->new(
 
-my $api_instance = TelstraTPN::LinksApi->new();
+    # Configure OAuth2 access token for authorization: auth
+    access_token => 'YOUR_ACCESS_TOKEN',
+);
+
 my $linkid = 'linkid_example'; # string | Unique identifier representing a specific link
 
 eval { 
-    my $result = $api_instance->100_inventory_links_history_by_linkid_get(linkid => $linkid);
+    my $result = $api_instance->inventory_links_history_by_linkid_get(linkid => $linkid);
     print Dumper($result);
 };
 if ($@) {
-    warn "Exception when calling LinksApi->100_inventory_links_history_by_linkid_get: $@\n";
+    warn "Exception when calling LinksApi->inventory_links_history_by_linkid_get: $@\n";
 }
 ```
 
@@ -186,11 +198,11 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Model100InventoryLinksHistoryResponse**](Model100InventoryLinksHistoryResponse.md)
+[**InventoryLinksHistoryResponse**](InventoryLinksHistoryResponse.md)
 
 ### Authorization
 
-No authorization required
+[auth](../README.md#auth)
 
 ### HTTP request headers
 

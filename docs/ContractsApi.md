@@ -9,13 +9,13 @@ All URIs are relative to *https://penapi.pacnetconnect.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**100_inventory_links_contract_by_linkid_and_contractid_get**](ContractsApi.md#100_inventory_links_contract_by_linkid_and_contractid_get) | **GET** /1.0.0/inventory/links/{linkid}/contract/{contractid} | Get active Contract by ContractID
-[**100_inventory_links_contract_by_linkid_and_contractid_put**](ContractsApi.md#100_inventory_links_contract_by_linkid_and_contractid_put) | **PUT** /1.0.0/inventory/links/{linkid}/contract/{contractid} | Update active Contract by ContractID
-[**100_inventory_links_contract_by_linkid_post**](ContractsApi.md#100_inventory_links_contract_by_linkid_post) | **POST** /1.0.0/inventory/links/{linkid}/contract | Create new Contract on specified link
+[**inventory_links_contract_by_linkid_and_contractid_get**](ContractsApi.md#inventory_links_contract_by_linkid_and_contractid_get) | **GET** /1.0.0/inventory/links/{linkid}/contract/{contractid} | Get active Contract by ContractID
+[**inventory_links_contract_by_linkid_and_contractid_put**](ContractsApi.md#inventory_links_contract_by_linkid_and_contractid_put) | **PUT** /1.0.0/inventory/links/{linkid}/contract/{contractid} | Update active Contract by ContractID
+[**inventory_links_contract_by_linkid_post**](ContractsApi.md#inventory_links_contract_by_linkid_post) | **POST** /1.0.0/inventory/links/{linkid}/contract | Create new Contract on specified link
 
 
-# **100_inventory_links_contract_by_linkid_and_contractid_get**
-> Model100InventoryLinksContractResponse 100_inventory_links_contract_by_linkid_and_contractid_get(linkid => $linkid, contractid => $contractid)
+# **inventory_links_contract_by_linkid_and_contractid_get**
+> InventoryLinksContractResponse inventory_links_contract_by_linkid_and_contractid_get(linkid => $linkid, contractid => $contractid)
 
 Get active Contract by ContractID
 
@@ -24,19 +24,22 @@ Get active Contract by ContractID
 ### Example 
 ```perl
 use Data::Dumper;
-use TelstraTPN::Configuration;
 use TelstraTPN::ContractsApi;
+my $api_instance = TelstraTPN::ContractsApi->new(
 
-my $api_instance = TelstraTPN::ContractsApi->new();
+    # Configure OAuth2 access token for authorization: auth
+    access_token => 'YOUR_ACCESS_TOKEN',
+);
+
 my $linkid = 'linkid_example'; # string | Unique identifier representing a specific link
 my $contractid = 'contractid_example'; # string | Unique identifier representing a specific contract
 
 eval { 
-    my $result = $api_instance->100_inventory_links_contract_by_linkid_and_contractid_get(linkid => $linkid, contractid => $contractid);
+    my $result = $api_instance->inventory_links_contract_by_linkid_and_contractid_get(linkid => $linkid, contractid => $contractid);
     print Dumper($result);
 };
 if ($@) {
-    warn "Exception when calling ContractsApi->100_inventory_links_contract_by_linkid_and_contractid_get: $@\n";
+    warn "Exception when calling ContractsApi->inventory_links_contract_by_linkid_and_contractid_get: $@\n";
 }
 ```
 
@@ -49,11 +52,11 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Model100InventoryLinksContractResponse**](Model100InventoryLinksContractResponse.md)
+[**InventoryLinksContractResponse**](InventoryLinksContractResponse.md)
 
 ### Authorization
 
-No authorization required
+[auth](../README.md#auth)
 
 ### HTTP request headers
 
@@ -62,8 +65,8 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **100_inventory_links_contract_by_linkid_and_contractid_put**
-> Model100InventoryLinksContractResponse33 100_inventory_links_contract_by_linkid_and_contractid_put(linkid => $linkid, contractid => $contractid, body => $body)
+# **inventory_links_contract_by_linkid_and_contractid_put**
+> InventoryLinksContractResponse33 inventory_links_contract_by_linkid_and_contractid_put(linkid => $linkid, contractid => $contractid, body => $body)
 
 Update active Contract by ContractID
 
@@ -72,20 +75,23 @@ Update active Contract by ContractID
 ### Example 
 ```perl
 use Data::Dumper;
-use TelstraTPN::Configuration;
 use TelstraTPN::ContractsApi;
+my $api_instance = TelstraTPN::ContractsApi->new(
 
-my $api_instance = TelstraTPN::ContractsApi->new();
+    # Configure OAuth2 access token for authorization: auth
+    access_token => 'YOUR_ACCESS_TOKEN',
+);
+
 my $linkid = 'linkid_example'; # string | Unique identifier representing a specific link
 my $contractid = 'contractid_example'; # string | Unique identifier representing a specific contract
-my $body = TelstraTPN::Object::Model100InventoryLinksContractRequest->new(); # Model100InventoryLinksContractRequest | 
+my $body = TelstraTPN::Object::InventoryLinksContractRequest->new(); # InventoryLinksContractRequest | 
 
 eval { 
-    my $result = $api_instance->100_inventory_links_contract_by_linkid_and_contractid_put(linkid => $linkid, contractid => $contractid, body => $body);
+    my $result = $api_instance->inventory_links_contract_by_linkid_and_contractid_put(linkid => $linkid, contractid => $contractid, body => $body);
     print Dumper($result);
 };
 if ($@) {
-    warn "Exception when calling ContractsApi->100_inventory_links_contract_by_linkid_and_contractid_put: $@\n";
+    warn "Exception when calling ContractsApi->inventory_links_contract_by_linkid_and_contractid_put: $@\n";
 }
 ```
 
@@ -95,15 +101,15 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **linkid** | **string**| Unique identifier representing a specific link | 
  **contractid** | **string**| Unique identifier representing a specific contract | 
- **body** | [**Model100InventoryLinksContractRequest**](Model100InventoryLinksContractRequest.md)|  | [optional] 
+ **body** | [**InventoryLinksContractRequest**](InventoryLinksContractRequest.md)|  | [optional] 
 
 ### Return type
 
-[**Model100InventoryLinksContractResponse33**](Model100InventoryLinksContractResponse33.md)
+[**InventoryLinksContractResponse33**](InventoryLinksContractResponse33.md)
 
 ### Authorization
 
-No authorization required
+[auth](../README.md#auth)
 
 ### HTTP request headers
 
@@ -112,8 +118,8 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **100_inventory_links_contract_by_linkid_post**
-> Model100InventoryLinksContractResponse38 100_inventory_links_contract_by_linkid_post(linkid => $linkid, body => $body)
+# **inventory_links_contract_by_linkid_post**
+> ARRAY[InventoryLinksContractResponse38] inventory_links_contract_by_linkid_post(linkid => $linkid, body => $body)
 
 Create new Contract on specified link
 
@@ -122,19 +128,22 @@ Create new Contract on specified link
 ### Example 
 ```perl
 use Data::Dumper;
-use TelstraTPN::Configuration;
 use TelstraTPN::ContractsApi;
+my $api_instance = TelstraTPN::ContractsApi->new(
 
-my $api_instance = TelstraTPN::ContractsApi->new();
+    # Configure OAuth2 access token for authorization: auth
+    access_token => 'YOUR_ACCESS_TOKEN',
+);
+
 my $linkid = 'linkid_example'; # string | Unique identifier representing a specific link
-my $body = TelstraTPN::Object::Model100InventoryLinksContractRequest37->new(); # Model100InventoryLinksContractRequest37 | 
+my $body = TelstraTPN::Object::InventoryLinksContractRequest37->new(); # InventoryLinksContractRequest37 | 
 
 eval { 
-    my $result = $api_instance->100_inventory_links_contract_by_linkid_post(linkid => $linkid, body => $body);
+    my $result = $api_instance->inventory_links_contract_by_linkid_post(linkid => $linkid, body => $body);
     print Dumper($result);
 };
 if ($@) {
-    warn "Exception when calling ContractsApi->100_inventory_links_contract_by_linkid_post: $@\n";
+    warn "Exception when calling ContractsApi->inventory_links_contract_by_linkid_post: $@\n";
 }
 ```
 
@@ -143,15 +152,15 @@ if ($@) {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **linkid** | **string**| Unique identifier representing a specific link | 
- **body** | [**Model100InventoryLinksContractRequest37**](Model100InventoryLinksContractRequest37.md)|  | [optional] 
+ **body** | [**InventoryLinksContractRequest37**](InventoryLinksContractRequest37.md)|  | [optional] 
 
 ### Return type
 
-[**Model100InventoryLinksContractResponse38**](Model100InventoryLinksContractResponse38.md)
+[**ARRAY[InventoryLinksContractResponse38]**](InventoryLinksContractResponse38.md)
 
 ### Authorization
 
-No authorization required
+[auth](../README.md#auth)
 
 ### HTTP request headers
 

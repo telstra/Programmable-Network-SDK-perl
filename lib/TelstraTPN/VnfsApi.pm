@@ -28,46 +28,43 @@ use Carp qw( croak );
 use Log::Any qw($log);
 
 use TelstraTPN::ApiClient;
-use TelstraTPN::Configuration;
 
 use base "Class::Data::Inheritable";
 
 __PACKAGE__->mk_classdata('method_documentation' => {});
 
 sub new {
-    my $class   = shift;
-    my (%self) = (
-        'api_client' => TelstraTPN::ApiClient->instance,
-        @_
-    );
+    my $class = shift;
+    my $api_client;
 
-    #my $self = {
-    #    #api_client => $options->{api_client}
-    #    api_client => $default_api_client
-    #}; 
+    if ($_[0] && ref $_[0] && ref $_[0] eq 'TelstraTPN::ApiClient' ) {
+        $api_client = $_[0];
+    } else {
+        $api_client = TelstraTPN::ApiClient->new(@_);
+    }
 
-    bless \%self, $class;
+    bless { api_client => $api_client }, $class;
 
 }
 
 
 #
-# 100_marketplace_image_get
+# marketplace_image_get
 #
 # List images in the Marketplace
 # 
 {
     my $params = {
     };
-    __PACKAGE__->method_documentation->{ '100_marketplace_image_get' } = { 
+    __PACKAGE__->method_documentation->{ 'marketplace_image_get' } = { 
     	summary => 'List images in the Marketplace',
         params => $params,
-        returns => 'Model100MarketplaceImageResponse',
+        returns => 'MarketplaceImageResponse',
         };
 }
-# @return Model100MarketplaceImageResponse
+# @return MarketplaceImageResponse
 #
-sub 100_marketplace_image_get {
+sub marketplace_image_get {
     my ($self, %args) = @_;
 
     # parse inputs
@@ -87,7 +84,7 @@ sub 100_marketplace_image_get {
 
     my $_body_data;
     # authentication setting, if any
-    my $auth_settings = [qw()];
+    my $auth_settings = [qw(auth )];
 
     # make the API Call
     my $response = $self->{api_client}->call_api($_resource_path, $_method,
@@ -96,7 +93,7 @@ sub 100_marketplace_image_get {
     if (!$response) {
         return;
     }
-    my $_response_object = $self->{api_client}->deserialize('Model100MarketplaceImageResponse', $response);
+    my $_response_object = $self->{api_client}->deserialize('MarketplaceImageResponse', $response);
     return $_response_object;
 }
 

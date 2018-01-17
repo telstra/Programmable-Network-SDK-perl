@@ -28,31 +28,28 @@ use Carp qw( croak );
 use Log::Any qw($log);
 
 use TelstraTPN::ApiClient;
-use TelstraTPN::Configuration;
 
 use base "Class::Data::Inheritable";
 
 __PACKAGE__->mk_classdata('method_documentation' => {});
 
 sub new {
-    my $class   = shift;
-    my (%self) = (
-        'api_client' => TelstraTPN::ApiClient->instance,
-        @_
-    );
+    my $class = shift;
+    my $api_client;
 
-    #my $self = {
-    #    #api_client => $options->{api_client}
-    #    api_client => $default_api_client
-    #}; 
+    if ($_[0] && ref $_[0] && ref $_[0] eq 'TelstraTPN::ApiClient' ) {
+        $api_client = $_[0];
+    } else {
+        $api_client = TelstraTPN::ApiClient->new(@_);
+    }
 
-    bless \%self, $class;
+    bless { api_client => $api_client }, $class;
 
 }
 
 
 #
-# 100_auth_generatetoken_post
+# auth_generatetoken_post
 #
 # Create an authentication token
 # 
@@ -77,30 +74,30 @@ sub new {
         required => '1',
     },
     };
-    __PACKAGE__->method_documentation->{ '100_auth_generatetoken_post' } = { 
+    __PACKAGE__->method_documentation->{ 'auth_generatetoken_post' } = { 
     	summary => 'Create an authentication token',
         params => $params,
-        returns => 'Model100AuthGeneratetokenResponse',
+        returns => 'AuthGeneratetokenResponse',
         };
 }
-# @return Model100AuthGeneratetokenResponse
+# @return AuthGeneratetokenResponse
 #
-sub 100_auth_generatetoken_post {
+sub auth_generatetoken_post {
     my ($self, %args) = @_;
 
     # verify the required parameter 'grant_type' is set
     unless (exists $args{'grant_type'}) {
-      croak("Missing the required parameter 'grant_type' when calling 100_auth_generatetoken_post");
+      croak("Missing the required parameter 'grant_type' when calling auth_generatetoken_post");
     }
 
     # verify the required parameter 'username' is set
     unless (exists $args{'username'}) {
-      croak("Missing the required parameter 'username' when calling 100_auth_generatetoken_post");
+      croak("Missing the required parameter 'username' when calling auth_generatetoken_post");
     }
 
     # verify the required parameter 'password' is set
     unless (exists $args{'password'}) {
-      croak("Missing the required parameter 'password' when calling 100_auth_generatetoken_post");
+      croak("Missing the required parameter 'password' when calling auth_generatetoken_post");
     }
 
     # parse inputs
@@ -144,27 +141,27 @@ sub 100_auth_generatetoken_post {
     if (!$response) {
         return;
     }
-    my $_response_object = $self->{api_client}->deserialize('Model100AuthGeneratetokenResponse', $response);
+    my $_response_object = $self->{api_client}->deserialize('AuthGeneratetokenResponse', $response);
     return $_response_object;
 }
 
 #
-# 100_auth_validatetoken_get
+# auth_validatetoken_get
 #
 # Validate authentication token
 # 
 {
     my $params = {
     };
-    __PACKAGE__->method_documentation->{ '100_auth_validatetoken_get' } = { 
+    __PACKAGE__->method_documentation->{ 'auth_validatetoken_get' } = { 
     	summary => 'Validate authentication token',
         params => $params,
-        returns => 'Model100AuthValidatetokenResponse',
+        returns => 'AuthValidatetokenResponse',
         };
 }
-# @return Model100AuthValidatetokenResponse
+# @return AuthValidatetokenResponse
 #
-sub 100_auth_validatetoken_get {
+sub auth_validatetoken_get {
     my ($self, %args) = @_;
 
     # parse inputs
@@ -193,7 +190,7 @@ sub 100_auth_validatetoken_get {
     if (!$response) {
         return;
     }
-    my $_response_object = $self->{api_client}->deserialize('Model100AuthValidatetokenResponse', $response);
+    my $_response_object = $self->{api_client}->deserialize('AuthValidatetokenResponse', $response);
     return $_response_object;
 }
 

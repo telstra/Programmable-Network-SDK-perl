@@ -27,10 +27,10 @@ Delete a topology tag
 ### Example 
 ```perl
 use Data::Dumper;
-use TelstraTPN::Configuration;
 use TelstraTPN::TopologiesApi;
+my $api_instance = TelstraTPN::TopologiesApi->new(
+);
 
-my $api_instance = TelstraTPN::TopologiesApi->new();
 my $topotaguuid = 'topotaguuid_example'; # string | Unique identifier representing a specific topology tag
 
 eval { 
@@ -72,10 +72,10 @@ Get information about the specified topology tag
 ### Example 
 ```perl
 use Data::Dumper;
-use TelstraTPN::Configuration;
 use TelstraTPN::TopologiesApi;
+my $api_instance = TelstraTPN::TopologiesApi->new(
+);
 
-my $api_instance = TelstraTPN::TopologiesApi->new();
 my $topotaguuid = 'topotaguuid_example'; # string | Unique identifier representing a specific topology tag
 
 eval { 
@@ -118,10 +118,10 @@ Update a topology tag's name and/or description
 ### Example 
 ```perl
 use Data::Dumper;
-use TelstraTPN::Configuration;
 use TelstraTPN::TopologiesApi;
+my $api_instance = TelstraTPN::TopologiesApi->new(
+);
 
-my $api_instance = TelstraTPN::TopologiesApi->new();
 my $topotaguuid = 'topotaguuid_example'; # string | Unique identifier representing a specific topology tag
 my $body = TelstraTPN::Object::Ttms100TopologyTagRequest->new(); # Ttms100TopologyTagRequest | 
 
@@ -166,10 +166,10 @@ List all topology tags
 ### Example 
 ```perl
 use Data::Dumper;
-use TelstraTPN::Configuration;
 use TelstraTPN::TopologiesApi;
+my $api_instance = TelstraTPN::TopologiesApi->new(
+);
 
-my $api_instance = TelstraTPN::TopologiesApi->new();
 
 eval { 
     my $result = $api_instance->ttms100_topology_tag_get();
@@ -208,10 +208,10 @@ List all objects (Endpoints, Links, VPorts, etc.) associated with the topology t
 ### Example 
 ```perl
 use Data::Dumper;
-use TelstraTPN::Configuration;
 use TelstraTPN::TopologiesApi;
+my $api_instance = TelstraTPN::TopologiesApi->new(
+);
 
-my $api_instance = TelstraTPN::TopologiesApi->new();
 my $topotaguuid = 'topotaguuid_example'; # string | Unique identifier representing a specific topology tag
 
 eval { 
@@ -254,10 +254,10 @@ Create a named topology tag
 ### Example 
 ```perl
 use Data::Dumper;
-use TelstraTPN::Configuration;
 use TelstraTPN::TopologiesApi;
+my $api_instance = TelstraTPN::TopologiesApi->new(
+);
 
-my $api_instance = TelstraTPN::TopologiesApi->new();
 my $body = TelstraTPN::Object::Ttms100TopologyTagRequest->new(); # Ttms100TopologyTagRequest | 
 
 eval { 

@@ -28,31 +28,28 @@ use Carp qw( croak );
 use Log::Any qw($log);
 
 use TelstraTPN::ApiClient;
-use TelstraTPN::Configuration;
 
 use base "Class::Data::Inheritable";
 
 __PACKAGE__->mk_classdata('method_documentation' => {});
 
 sub new {
-    my $class   = shift;
-    my (%self) = (
-        'api_client' => TelstraTPN::ApiClient->instance,
-        @_
-    );
+    my $class = shift;
+    my $api_client;
 
-    #my $self = {
-    #    #api_client => $options->{api_client}
-    #    api_client => $default_api_client
-    #}; 
+    if ($_[0] && ref $_[0] && ref $_[0] eq 'TelstraTPN::ApiClient' ) {
+        $api_client = $_[0];
+    } else {
+        $api_client = TelstraTPN::ApiClient->new(@_);
+    }
 
-    bless \%self, $class;
+    bless { api_client => $api_client }, $class;
 
 }
 
 
 #
-# 100_account_by_customeruuid_get
+# account_by_customeruuid_get
 #
 # Get account information details
 # 
@@ -65,20 +62,20 @@ sub new {
         required => '1',
     },
     };
-    __PACKAGE__->method_documentation->{ '100_account_by_customeruuid_get' } = { 
+    __PACKAGE__->method_documentation->{ 'account_by_customeruuid_get' } = { 
     	summary => 'Get account information details',
         params => $params,
-        returns => 'Model100AccountResponse',
+        returns => 'ARRAY[AccountResponse]',
         };
 }
-# @return Model100AccountResponse
+# @return ARRAY[AccountResponse]
 #
-sub 100_account_by_customeruuid_get {
+sub account_by_customeruuid_get {
     my ($self, %args) = @_;
 
     # verify the required parameter 'customeruuid' is set
     unless (exists $args{'customeruuid'}) {
-      croak("Missing the required parameter 'customeruuid' when calling 100_account_by_customeruuid_get");
+      croak("Missing the required parameter 'customeruuid' when calling account_by_customeruuid_get");
     }
 
     # parse inputs
@@ -105,7 +102,7 @@ sub 100_account_by_customeruuid_get {
 
     my $_body_data;
     # authentication setting, if any
-    my $auth_settings = [qw()];
+    my $auth_settings = [qw(auth )];
 
     # make the API Call
     my $response = $self->{api_client}->call_api($_resource_path, $_method,
@@ -114,12 +111,12 @@ sub 100_account_by_customeruuid_get {
     if (!$response) {
         return;
     }
-    my $_response_object = $self->{api_client}->deserialize('Model100AccountResponse', $response);
+    my $_response_object = $self->{api_client}->deserialize('ARRAY[AccountResponse]', $response);
     return $_response_object;
 }
 
 #
-# 100_account_user_by_customeruuid_get
+# account_user_by_customeruuid_get
 #
 # List users
 # 
@@ -132,7 +129,7 @@ sub 100_account_by_customeruuid_get {
         required => '1',
     },
     };
-    __PACKAGE__->method_documentation->{ '100_account_user_by_customeruuid_get' } = { 
+    __PACKAGE__->method_documentation->{ 'account_user_by_customeruuid_get' } = { 
     	summary => 'List users',
         params => $params,
         returns => 'ARRAY[User]',
@@ -140,12 +137,12 @@ sub 100_account_by_customeruuid_get {
 }
 # @return ARRAY[User]
 #
-sub 100_account_user_by_customeruuid_get {
+sub account_user_by_customeruuid_get {
     my ($self, %args) = @_;
 
     # verify the required parameter 'customeruuid' is set
     unless (exists $args{'customeruuid'}) {
-      croak("Missing the required parameter 'customeruuid' when calling 100_account_user_by_customeruuid_get");
+      croak("Missing the required parameter 'customeruuid' when calling account_user_by_customeruuid_get");
     }
 
     # parse inputs
@@ -172,7 +169,7 @@ sub 100_account_user_by_customeruuid_get {
 
     my $_body_data;
     # authentication setting, if any
-    my $auth_settings = [qw()];
+    my $auth_settings = [qw(auth )];
 
     # make the API Call
     my $response = $self->{api_client}->call_api($_resource_path, $_method,

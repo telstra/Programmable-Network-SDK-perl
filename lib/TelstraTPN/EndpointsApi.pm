@@ -28,282 +28,25 @@ use Carp qw( croak );
 use Log::Any qw($log);
 
 use TelstraTPN::ApiClient;
-use TelstraTPN::Configuration;
 
 use base "Class::Data::Inheritable";
 
 __PACKAGE__->mk_classdata('method_documentation' => {});
 
 sub new {
-    my $class   = shift;
-    my (%self) = (
-        'api_client' => TelstraTPN::ApiClient->instance,
-        @_
-    );
+    my $class = shift;
+    my $api_client;
 
-    #my $self = {
-    #    #api_client => $options->{api_client}
-    #    api_client => $default_api_client
-    #}; 
+    if ($_[0] && ref $_[0] && ref $_[0] eq 'TelstraTPN::ApiClient' ) {
+        $api_client = $_[0];
+    } else {
+        $api_client = TelstraTPN::ApiClient->new(@_);
+    }
 
-    bless \%self, $class;
+    bless { api_client => $api_client }, $class;
 
 }
 
-
-#
-# 100_inventory_endpoint_by_endpointuuid_get
-#
-# Get information about the specified endpoint
-# 
-# @param string $endpointuuid Unique identifier representing a specific endpoint (required)
-{
-    my $params = {
-    'endpointuuid' => {
-        data_type => 'string',
-        description => 'Unique identifier representing a specific endpoint',
-        required => '1',
-    },
-    };
-    __PACKAGE__->method_documentation->{ '100_inventory_endpoint_by_endpointuuid_get' } = { 
-    	summary => 'Get information about the specified endpoint',
-        params => $params,
-        returns => 'Model100InventoryEndpointResponse',
-        };
-}
-# @return Model100InventoryEndpointResponse
-#
-sub 100_inventory_endpoint_by_endpointuuid_get {
-    my ($self, %args) = @_;
-
-    # verify the required parameter 'endpointuuid' is set
-    unless (exists $args{'endpointuuid'}) {
-      croak("Missing the required parameter 'endpointuuid' when calling 100_inventory_endpoint_by_endpointuuid_get");
-    }
-
-    # parse inputs
-    my $_resource_path = '/1.0.0/inventory/endpoint/{endpointuuid}';
-
-    my $_method = 'GET';
-    my $query_params = {};
-    my $header_params = {};
-    my $form_params = {};
-
-    # 'Accept' and 'Content-Type' header
-    my $_header_accept = $self->{api_client}->select_header_accept('application/json');
-    if ($_header_accept) {
-        $header_params->{'Accept'} = $_header_accept;
-    }
-    $header_params->{'Content-Type'} = $self->{api_client}->select_header_content_type('application/json');
-
-    # path params
-    if ( exists $args{'endpointuuid'}) {
-        my $_base_variable = "{" . "endpointuuid" . "}";
-        my $_base_value = $self->{api_client}->to_path_value($args{'endpointuuid'});
-        $_resource_path =~ s/$_base_variable/$_base_value/g;
-    }
-
-    my $_body_data;
-    # authentication setting, if any
-    my $auth_settings = [qw()];
-
-    # make the API Call
-    my $response = $self->{api_client}->call_api($_resource_path, $_method,
-                                           $query_params, $form_params,
-                                           $header_params, $_body_data, $auth_settings);
-    if (!$response) {
-        return;
-    }
-    my $_response_object = $self->{api_client}->deserialize('Model100InventoryEndpointResponse', $response);
-    return $_response_object;
-}
-
-#
-# 100_inventory_endpoints_customeruuid_by_customeruuid_get
-#
-# Get list of endpoints for a customer
-# 
-# @param string $customeruuid Unique identifier representing a specific customer (required)
-{
-    my $params = {
-    'customeruuid' => {
-        data_type => 'string',
-        description => 'Unique identifier representing a specific customer',
-        required => '1',
-    },
-    };
-    __PACKAGE__->method_documentation->{ '100_inventory_endpoints_customeruuid_by_customeruuid_get' } = { 
-    	summary => 'Get list of endpoints for a customer',
-        params => $params,
-        returns => 'Model100InventoryEndpointsCustomeruuidResponse',
-        };
-}
-# @return Model100InventoryEndpointsCustomeruuidResponse
-#
-sub 100_inventory_endpoints_customeruuid_by_customeruuid_get {
-    my ($self, %args) = @_;
-
-    # verify the required parameter 'customeruuid' is set
-    unless (exists $args{'customeruuid'}) {
-      croak("Missing the required parameter 'customeruuid' when calling 100_inventory_endpoints_customeruuid_by_customeruuid_get");
-    }
-
-    # parse inputs
-    my $_resource_path = '/1.0.0/inventory/endpoints/customeruuid/{customeruuid}';
-
-    my $_method = 'GET';
-    my $query_params = {};
-    my $header_params = {};
-    my $form_params = {};
-
-    # 'Accept' and 'Content-Type' header
-    my $_header_accept = $self->{api_client}->select_header_accept('application/json');
-    if ($_header_accept) {
-        $header_params->{'Accept'} = $_header_accept;
-    }
-    $header_params->{'Content-Type'} = $self->{api_client}->select_header_content_type('application/json');
-
-    # path params
-    if ( exists $args{'customeruuid'}) {
-        my $_base_variable = "{" . "customeruuid" . "}";
-        my $_base_value = $self->{api_client}->to_path_value($args{'customeruuid'});
-        $_resource_path =~ s/$_base_variable/$_base_value/g;
-    }
-
-    my $_body_data;
-    # authentication setting, if any
-    my $auth_settings = [qw()];
-
-    # make the API Call
-    my $response = $self->{api_client}->call_api($_resource_path, $_method,
-                                           $query_params, $form_params,
-                                           $header_params, $_body_data, $auth_settings);
-    if (!$response) {
-        return;
-    }
-    my $_response_object = $self->{api_client}->deserialize('Model100InventoryEndpointsCustomeruuidResponse', $response);
-    return $_response_object;
-}
-
-#
-# 100_inventory_regularendpoint_post
-#
-# Create Physical (Port) Endpoint
-# 
-# @param Model100InventoryRegularendpointRequest $body  (optional)
-{
-    my $params = {
-    'body' => {
-        data_type => 'Model100InventoryRegularendpointRequest',
-        description => '',
-        required => '0',
-    },
-    };
-    __PACKAGE__->method_documentation->{ '100_inventory_regularendpoint_post' } = { 
-    	summary => 'Create Physical (Port) Endpoint',
-        params => $params,
-        returns => 'Model100InventoryRegularendpointResponse',
-        };
-}
-# @return Model100InventoryRegularendpointResponse
-#
-sub 100_inventory_regularendpoint_post {
-    my ($self, %args) = @_;
-
-    # parse inputs
-    my $_resource_path = '/1.0.0/inventory/regularendpoint';
-
-    my $_method = 'POST';
-    my $query_params = {};
-    my $header_params = {};
-    my $form_params = {};
-
-    # 'Accept' and 'Content-Type' header
-    my $_header_accept = $self->{api_client}->select_header_accept('application/json');
-    if ($_header_accept) {
-        $header_params->{'Accept'} = $_header_accept;
-    }
-    $header_params->{'Content-Type'} = $self->{api_client}->select_header_content_type('application/json');
-
-    my $_body_data;
-    # body params
-    if ( exists $args{'body'}) {
-        $_body_data = $args{'body'};
-    }
-
-    # authentication setting, if any
-    my $auth_settings = [qw()];
-
-    # make the API Call
-    my $response = $self->{api_client}->call_api($_resource_path, $_method,
-                                           $query_params, $form_params,
-                                           $header_params, $_body_data, $auth_settings);
-    if (!$response) {
-        return;
-    }
-    my $_response_object = $self->{api_client}->deserialize('Model100InventoryRegularendpointResponse', $response);
-    return $_response_object;
-}
-
-#
-# 100_inventory_vnfendpoint_post
-#
-# Create VNF Endpoint
-# 
-# @param Model100InventoryVnfendpointRequest $body  (optional)
-{
-    my $params = {
-    'body' => {
-        data_type => 'Model100InventoryVnfendpointRequest',
-        description => '',
-        required => '0',
-    },
-    };
-    __PACKAGE__->method_documentation->{ '100_inventory_vnfendpoint_post' } = { 
-    	summary => 'Create VNF Endpoint',
-        params => $params,
-        returns => 'Model100InventoryVnfendpointResponse',
-        };
-}
-# @return Model100InventoryVnfendpointResponse
-#
-sub 100_inventory_vnfendpoint_post {
-    my ($self, %args) = @_;
-
-    # parse inputs
-    my $_resource_path = '/1.0.0/inventory/vnfendpoint';
-
-    my $_method = 'POST';
-    my $query_params = {};
-    my $header_params = {};
-    my $form_params = {};
-
-    # 'Accept' and 'Content-Type' header
-    my $_header_accept = $self->{api_client}->select_header_accept('application/json');
-    if ($_header_accept) {
-        $header_params->{'Accept'} = $_header_accept;
-    }
-    $header_params->{'Content-Type'} = $self->{api_client}->select_header_content_type('application/json');
-
-    my $_body_data;
-    # body params
-    if ( exists $args{'body'}) {
-        $_body_data = $args{'body'};
-    }
-
-    # authentication setting, if any
-    my $auth_settings = [qw()];
-
-    # make the API Call
-    my $response = $self->{api_client}->call_api($_resource_path, $_method,
-                                           $query_params, $form_params,
-                                           $header_params, $_body_data, $auth_settings);
-    if (!$response) {
-        return;
-    }
-    my $_response_object = $self->{api_client}->deserialize('Model100InventoryVnfendpointResponse', $response);
-    return $_response_object;
-}
 
 #
 # eis100_endpoints_assign_topology_tag_by_endpointuuid_post
@@ -328,10 +71,10 @@ sub 100_inventory_vnfendpoint_post {
     __PACKAGE__->method_documentation->{ 'eis100_endpoints_assign_topology_tag_by_endpointuuid_post' } = { 
     	summary => 'Assign a Topology Tag to an Endpoint',
         params => $params,
-        returns => 'SuccessFragment',
+        returns => 'ARRAY[SuccessFragment]',
         };
 }
-# @return SuccessFragment
+# @return ARRAY[SuccessFragment]
 #
 sub eis100_endpoints_assign_topology_tag_by_endpointuuid_post {
     my ($self, %args) = @_;
@@ -370,7 +113,7 @@ sub eis100_endpoints_assign_topology_tag_by_endpointuuid_post {
     }
 
     # authentication setting, if any
-    my $auth_settings = [qw()];
+    my $auth_settings = [qw(auth )];
 
     # make the API Call
     my $response = $self->{api_client}->call_api($_resource_path, $_method,
@@ -379,7 +122,261 @@ sub eis100_endpoints_assign_topology_tag_by_endpointuuid_post {
     if (!$response) {
         return;
     }
-    my $_response_object = $self->{api_client}->deserialize('SuccessFragment', $response);
+    my $_response_object = $self->{api_client}->deserialize('ARRAY[SuccessFragment]', $response);
+    return $_response_object;
+}
+
+#
+# inventory_endpoint_by_endpointuuid_get
+#
+# Get information about the specified endpoint
+# 
+# @param string $endpointuuid Unique identifier representing a specific endpoint (required)
+{
+    my $params = {
+    'endpointuuid' => {
+        data_type => 'string',
+        description => 'Unique identifier representing a specific endpoint',
+        required => '1',
+    },
+    };
+    __PACKAGE__->method_documentation->{ 'inventory_endpoint_by_endpointuuid_get' } = { 
+    	summary => 'Get information about the specified endpoint',
+        params => $params,
+        returns => 'InventoryEndpointResponse',
+        };
+}
+# @return InventoryEndpointResponse
+#
+sub inventory_endpoint_by_endpointuuid_get {
+    my ($self, %args) = @_;
+
+    # verify the required parameter 'endpointuuid' is set
+    unless (exists $args{'endpointuuid'}) {
+      croak("Missing the required parameter 'endpointuuid' when calling inventory_endpoint_by_endpointuuid_get");
+    }
+
+    # parse inputs
+    my $_resource_path = '/1.0.0/inventory/endpoint/{endpointuuid}';
+
+    my $_method = 'GET';
+    my $query_params = {};
+    my $header_params = {};
+    my $form_params = {};
+
+    # 'Accept' and 'Content-Type' header
+    my $_header_accept = $self->{api_client}->select_header_accept('application/json');
+    if ($_header_accept) {
+        $header_params->{'Accept'} = $_header_accept;
+    }
+    $header_params->{'Content-Type'} = $self->{api_client}->select_header_content_type('application/json');
+
+    # path params
+    if ( exists $args{'endpointuuid'}) {
+        my $_base_variable = "{" . "endpointuuid" . "}";
+        my $_base_value = $self->{api_client}->to_path_value($args{'endpointuuid'});
+        $_resource_path =~ s/$_base_variable/$_base_value/g;
+    }
+
+    my $_body_data;
+    # authentication setting, if any
+    my $auth_settings = [qw(auth )];
+
+    # make the API Call
+    my $response = $self->{api_client}->call_api($_resource_path, $_method,
+                                           $query_params, $form_params,
+                                           $header_params, $_body_data, $auth_settings);
+    if (!$response) {
+        return;
+    }
+    my $_response_object = $self->{api_client}->deserialize('InventoryEndpointResponse', $response);
+    return $_response_object;
+}
+
+#
+# inventory_endpoints_customeruuid_by_customeruuid_get
+#
+# Get list of endpoints for a customer
+# 
+# @param string $customeruuid Unique identifier representing a specific customer (required)
+{
+    my $params = {
+    'customeruuid' => {
+        data_type => 'string',
+        description => 'Unique identifier representing a specific customer',
+        required => '1',
+    },
+    };
+    __PACKAGE__->method_documentation->{ 'inventory_endpoints_customeruuid_by_customeruuid_get' } = { 
+    	summary => 'Get list of endpoints for a customer',
+        params => $params,
+        returns => 'InventoryEndpointsCustomeruuidResponse',
+        };
+}
+# @return InventoryEndpointsCustomeruuidResponse
+#
+sub inventory_endpoints_customeruuid_by_customeruuid_get {
+    my ($self, %args) = @_;
+
+    # verify the required parameter 'customeruuid' is set
+    unless (exists $args{'customeruuid'}) {
+      croak("Missing the required parameter 'customeruuid' when calling inventory_endpoints_customeruuid_by_customeruuid_get");
+    }
+
+    # parse inputs
+    my $_resource_path = '/1.0.0/inventory/endpoints/customeruuid/{customeruuid}';
+
+    my $_method = 'GET';
+    my $query_params = {};
+    my $header_params = {};
+    my $form_params = {};
+
+    # 'Accept' and 'Content-Type' header
+    my $_header_accept = $self->{api_client}->select_header_accept('application/json');
+    if ($_header_accept) {
+        $header_params->{'Accept'} = $_header_accept;
+    }
+    $header_params->{'Content-Type'} = $self->{api_client}->select_header_content_type('application/json');
+
+    # path params
+    if ( exists $args{'customeruuid'}) {
+        my $_base_variable = "{" . "customeruuid" . "}";
+        my $_base_value = $self->{api_client}->to_path_value($args{'customeruuid'});
+        $_resource_path =~ s/$_base_variable/$_base_value/g;
+    }
+
+    my $_body_data;
+    # authentication setting, if any
+    my $auth_settings = [qw(auth )];
+
+    # make the API Call
+    my $response = $self->{api_client}->call_api($_resource_path, $_method,
+                                           $query_params, $form_params,
+                                           $header_params, $_body_data, $auth_settings);
+    if (!$response) {
+        return;
+    }
+    my $_response_object = $self->{api_client}->deserialize('InventoryEndpointsCustomeruuidResponse', $response);
+    return $_response_object;
+}
+
+#
+# inventory_regularendpoint_post
+#
+# Create Physical (Port) Endpoint
+# 
+# @param InventoryRegularendpointRequest $body  (optional)
+{
+    my $params = {
+    'body' => {
+        data_type => 'InventoryRegularendpointRequest',
+        description => '',
+        required => '0',
+    },
+    };
+    __PACKAGE__->method_documentation->{ 'inventory_regularendpoint_post' } = { 
+    	summary => 'Create Physical (Port) Endpoint',
+        params => $params,
+        returns => 'ARRAY[InventoryRegularendpointResponse]',
+        };
+}
+# @return ARRAY[InventoryRegularendpointResponse]
+#
+sub inventory_regularendpoint_post {
+    my ($self, %args) = @_;
+
+    # parse inputs
+    my $_resource_path = '/1.0.0/inventory/regularendpoint';
+
+    my $_method = 'POST';
+    my $query_params = {};
+    my $header_params = {};
+    my $form_params = {};
+
+    # 'Accept' and 'Content-Type' header
+    my $_header_accept = $self->{api_client}->select_header_accept('application/json');
+    if ($_header_accept) {
+        $header_params->{'Accept'} = $_header_accept;
+    }
+    $header_params->{'Content-Type'} = $self->{api_client}->select_header_content_type('application/json');
+
+    my $_body_data;
+    # body params
+    if ( exists $args{'body'}) {
+        $_body_data = $args{'body'};
+    }
+
+    # authentication setting, if any
+    my $auth_settings = [qw(auth )];
+
+    # make the API Call
+    my $response = $self->{api_client}->call_api($_resource_path, $_method,
+                                           $query_params, $form_params,
+                                           $header_params, $_body_data, $auth_settings);
+    if (!$response) {
+        return;
+    }
+    my $_response_object = $self->{api_client}->deserialize('ARRAY[InventoryRegularendpointResponse]', $response);
+    return $_response_object;
+}
+
+#
+# inventory_vnfendpoint_post
+#
+# Create VNF Endpoint
+# 
+# @param InventoryVnfendpointRequest $body  (optional)
+{
+    my $params = {
+    'body' => {
+        data_type => 'InventoryVnfendpointRequest',
+        description => '',
+        required => '0',
+    },
+    };
+    __PACKAGE__->method_documentation->{ 'inventory_vnfendpoint_post' } = { 
+    	summary => 'Create VNF Endpoint',
+        params => $params,
+        returns => 'ARRAY[InventoryVnfendpointResponse]',
+        };
+}
+# @return ARRAY[InventoryVnfendpointResponse]
+#
+sub inventory_vnfendpoint_post {
+    my ($self, %args) = @_;
+
+    # parse inputs
+    my $_resource_path = '/1.0.0/inventory/vnfendpoint';
+
+    my $_method = 'POST';
+    my $query_params = {};
+    my $header_params = {};
+    my $form_params = {};
+
+    # 'Accept' and 'Content-Type' header
+    my $_header_accept = $self->{api_client}->select_header_accept('application/json');
+    if ($_header_accept) {
+        $header_params->{'Accept'} = $_header_accept;
+    }
+    $header_params->{'Content-Type'} = $self->{api_client}->select_header_content_type('application/json');
+
+    my $_body_data;
+    # body params
+    if ( exists $args{'body'}) {
+        $_body_data = $args{'body'};
+    }
+
+    # authentication setting, if any
+    my $auth_settings = [qw(auth )];
+
+    # make the API Call
+    my $response = $self->{api_client}->call_api($_resource_path, $_method,
+                                           $query_params, $form_params,
+                                           $header_params, $_body_data, $auth_settings);
+    if (!$response) {
+        return;
+    }
+    my $_response_object = $self->{api_client}->deserialize('ARRAY[InventoryVnfendpointResponse]', $response);
     return $_response_object;
 }
 

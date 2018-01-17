@@ -62,19 +62,28 @@ my %_apis = map { $_ =~ /^TelstraTPN::(.*)$/; $1 => $_ }
 			grep {$_ =~ /Api$/} 
 			usesub 'TelstraTPN';
 
-=head1 new()
+=head1 new($api_client)
 	
-	Any parameters are optional, and are passed to and stored on the api_client object. 
+	create a new TelstraTPN::ApiFactory instance with the given TelstraTPN::ApiClient instance.
+
+=head1 new(%parameters)
+
+	Any parameters are optional, and are passed to and stored on the api_client object.
 	
-	base_url: (optional)
-		supply this to change the default base URL taken from the Swagger definition.
-	
+	See L<TelstraTPN::ApiClient> and L<TelstraTPN::Configuration> for valid parameters
+
 =cut	
 
 sub new {
-    my ($class, %p) = (shift, @_);
-	$p{api_client} = TelstraTPN::ApiClient->instance(%p);			
-	return bless \%p, $class;
+    my ($class) = shift;
+
+    my $api_client;
+    if ($_[0] && ref $_[0] && ref $_[0] eq 'TelstraTPN::ApiClient' ) {
+        $api_client = $_[0];
+    } else {
+        $api_client = TelstraTPN::ApiClient->new(@_);
+    }
+    bless { api_client => $api_client }, $class;
 }
 
 =head1 get_api($which)
@@ -91,7 +100,7 @@ sub get_api {
 	my ($self, $which) = @_;
 	croak "API not specified" unless $which;
 	my $api_class = $_apis{"${which}Api"} || croak "No known API for '$which'";
-	return $api_class->new(api_client => $self->api_client); 
+	return $api_class->new($self->api_client); 
 }
 
 =head1 api_client()
